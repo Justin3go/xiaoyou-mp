@@ -1,0 +1,72 @@
+{
+	"tabBar": {
+		"color": "#7A7E83",
+		"selectedColor": "#000C3F",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [
+			{
+				"pagePath": "pages/index/index",
+				"iconPath": "static/image/tarbar/index.png",
+				"selectedIconPath": "static/image/tarbar/index_selected.png",
+				"text": "主页"
+			},
+			{
+				"pagePath": "pages/questionnaire/index",
+				"iconPath": "static/image/tarbar/questionnaire.png",
+				"selectedIconPath": "static/image/tarbar/questionnaire_selected.png",
+				"text": "问卷"
+			},
+			{
+				"pagePath": "pages/show/index",
+				"iconPath": "static/image/tarbar/show.png",
+				"selectedIconPath": "static/image/tarbar/show_selected.png",
+				"text": "可视化"
+			},
+			{
+				"pagePath": "pages/me/index",
+				"iconPath": "static/image/tarbar/me.png",
+				"selectedIconPath": "static/image/tarbar/me_selected.png",
+				"text": "我的"
+			}
+		]
+	},
+	"easycom": {
+		"autoscan": true,
+		"custom": {
+			"^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
+		}
+	},
+	"pages": [
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "首页"
+			}
+		},
+		{
+			"path": "pages/questionnaire/index",
+			"style": {
+				"navigationBarTitleText": "问卷"
+			}
+		},
+		{
+			"path": "pages/show/index",
+			"style": {
+				"navigationBarTitleText": "可视化"
+			}
+		},
+		{
+			"path": "pages/me/index",
+			"style": {
+				"navigationBarTitleText": "我的"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "笑友",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	}
+}
