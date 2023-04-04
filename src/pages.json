@@ -41,7 +41,7 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "首页"
+				"navigationStyle": "custom"
 			}
 		},
 		{
@@ -59,7 +59,13 @@
 		{
 			"path": "pages/me/index",
 			"style": {
-				"navigationBarTitleText": "我的"
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/me/updateUser",
+			"style": {
+				"navigationBarTitleText": "修改资料"
 			}
 		}
 	],

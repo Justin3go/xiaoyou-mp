@@ -1,13 +1,5 @@
 import gql from "graphql-tag";
 
-/**
- * $data
- *
- * LoginAndAutoSignUpInput:
- * {
- *  code: string;
- * }
- */
 export const loginAndAutoSignUpGQL = gql`
 	mutation loginAndAutoSignUp($data: LoginAndAutoSignUpInput!) {
 		loginAndAutoSignUp(data: $data) {
@@ -17,6 +9,11 @@ export const loginAndAutoSignUpGQL = gql`
 				id
 				openId
 				createdAt
+				avatarUrl
+				nickName
+				gender
+				province
+				birthday
 			}
 		}
 	}
@@ -41,6 +38,25 @@ export const meGQL = gql`
 			countAsOwner
 			countAsFriend
 			nickName
+		}
+	}
+`;
+
+export const updateUserGQL = gql`
+	mutation updateUser($data: UpdateUserInput!) {
+		updateUser(data: $data) {
+			avatarUrl
+			nickName
+		}
+	}
+`;
+
+export const getPostObjectParamsGQL = gql`
+	query getPostObjectParams {
+		getPostObjectParams {
+			OSSAccessKeyId
+			policy
+			signature
 		}
 	}
 `;

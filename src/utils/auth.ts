@@ -6,9 +6,15 @@ export function getToken(accessOrRefreshKey: "accessToken" | "refreshToken"): st
 export function setToken(accessOrRefreshKey: "accessToken" | "refreshToken", value: string) {
 	return uni.setStorageSync(accessOrRefreshKey, value);
 }
+// 清除双token
+export function clearToken() {
+	uni.removeStorageSync("accessToken");
+	uni.removeStorageSync("refreshToken");
+}
+
 // 获取过期时间，token需要符合JWT格式且有exp属性
 export function getExpireInPayload(token: string): number {
-	const parts = token.split('.');
-  const payload = JSON.parse(atob(parts[1]));
-  return Number(payload.exp)
+	const parts = token.split(".");
+	const payload = JSON.parse(atob(parts[1]));
+	return Number(payload.exp);
 }
