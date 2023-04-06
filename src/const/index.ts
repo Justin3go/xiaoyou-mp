@@ -47,5 +47,8 @@ export const provincesInChina = [
 
 export const logoUrl = "/static/logo.jpg";
 
-
 export const ossHost = "https://oss.justin3go.com";
+
+export const bannerUrl1 = "https://oss.justin3go.com/banners/banner1.jpg";
+
+export const shareCodeUrl = '/static/image/indexPage/shareCode.png'

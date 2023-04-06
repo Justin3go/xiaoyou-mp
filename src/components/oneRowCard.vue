@@ -7,7 +7,7 @@
 			<view class="right-text">
 				<slot name="rightText"> 更多 </slot>
 			</view>
-			<view v-if="props.showIcon" class="right-icon" @click="props.clickIconEvent">
+			<view v-if="props.showIcon" class="right-icon">
 				<slot name="rightIcon">
 					<uni-icons type="forward" size="30" color="#D3D3D3"></uni-icons>
 				</slot>
@@ -18,13 +18,11 @@
 <script setup lang="ts">
 interface propsI {
 	showIcon: boolean;
-	clickIconEvent: Function;
 	rightTextWidth: string;
 }
 
 const props = withDefaults(defineProps<propsI>(), {
 	showIcon: true,
-	clickIconEvent: () => {},
 	rightTextWidth: "50px",
 });
 
@@ -40,8 +38,11 @@ const width = props.rightTextWidth;
 	justify-content: space-between;
 	align-items: center;
 	.left {
-		flex: 1;
-		padding: 0 20px;
+		width: 70%;
+		padding-left: 20px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 	.right {
 		display: flex;
