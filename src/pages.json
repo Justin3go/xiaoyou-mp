@@ -51,6 +51,18 @@
 			}
 		},
 		{
+			"path": "pages/questionnaire/write",
+			"style": {
+				"navigationBarTitleText": "问卷填写"
+			}
+		},
+		{
+			"path": "pages/questionnaire/look",
+			"style": {
+				"navigationBarTitleText": "查看问卷结果"
+			}
+		},
+		{
 			"path": "pages/show/index",
 			"style": {
 				"navigationBarTitleText": "可视化"

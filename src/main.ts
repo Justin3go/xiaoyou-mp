@@ -53,6 +53,7 @@ uni.addInterceptor("request", {
 			setToken("refreshToken", newRefreshToken);
 		} else {
 			// refreshToken过期，需要重新登录
+			// FIXME 如果不在四个TAB页，这里应该是有问题的
 			uni.switchTab({
 				url: "/pages/me/index",
 				success: () => {

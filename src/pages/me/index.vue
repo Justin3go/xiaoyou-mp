@@ -1,12 +1,16 @@
 <template>
 	<view v-if="!isLogin" class="no-login">
 		<view class="logo">
-			<image style="height: 250px; border-radius: 50px;" mode="heightFix" :src="logoUrl"></image>
+			<image style="height: 250px; border-radius: 50px" mode="heightFix" :src="logoUrl"></image>
 		</view>
 		<view class="tips">
 			<view class="tips-title">用户登录注意事项</view>
-			<view class="tips-content">1. 未注册的用户将直接注册，第一次使用该小程序的用户请登录后及时补充完整的昵称、头像等关键信息；</view>
-			<view class="tips-content">2. 请使用你常用的昵称或者真实姓名和头像，以方便在互相填写问卷时识别是谁帮助了你以及你帮助了谁；</view>
+			<view class="tips-content"
+				>1. 未注册的用户将直接注册，第一次使用该小程序的用户请登录后及时补充完整的昵称、头像等关键信息；</view
+			>
+			<view class="tips-content"
+				>2. 请使用你常用的昵称或者真实姓名和头像，以方便在互相填写问卷时识别是谁帮助了你以及你帮助了谁；</view
+			>
 			<view class="tips-content">3. 性别、城市、年龄等信息也是我们后续提供相关心理服务的重要依据。</view>
 		</view>
 		<view class="login-button-container">
@@ -17,7 +21,12 @@
 		<view class="top-card">
 			<view class="user-info">
 				<view class="info">
-					<image class="avatar" style="height: 90%; border-radius: 50%" mode="heightFix" :src="meStore.user?.avatarUrl || userDefaultData.avatarUrl"></image>
+					<image
+						class="avatar"
+						style="height: 90%; border-radius: 50%"
+						mode="heightFix"
+						:src="meStore.user?.avatarUrl || userDefaultData.avatarUrl"
+					></image>
 					<view class="text-info">
 						<view class="nick-name">{{ meStore.user?.nickName || userDefaultData.nickName }}</view>
 						<view class="id">id: {{ meStore.user?.id || userDefaultData.id }}</view>
@@ -102,29 +111,42 @@ import quickEntryCard from "@/components/quickEntryCard.vue";
 import oneRowCard from "@/components/oneRowCard.vue";
 import { getToken } from "@/utils/auth";
 import { userDefaultData } from "@/const";
-import { onShow, onInit, onLoad, onReady } from '@dcloudio/uni-app'
-import { logoUrl } from "@/const"
+import { onShow, onInit, onLoad, onReady } from "@dcloudio/uni-app";
+import { logoUrl } from "@/const";
 
 const meStore = useMeStore();
 
 const isLogin = ref(false);
+// 通过分享链接点击进入传递的参数
+const params = reactive({
+	questionnaireId: "",
+	ownerId: "",
+	curScene: 0,
+});
 
 onShow(() => {
 	console.log("page me show...");
-	isLogin.value = (getToken('refreshToken') !== '')
-})
+	isLogin.value = getToken("refreshToken") !== "";
+});
 
-onInit(() => console.log("page me init"))
-onLoad(() => console.log("page me load"))
-onReady(() => console.log("page me ready"))  
+onLoad(async (option) => {
+	params.questionnaireId = option?.questionnaireId;
+	params.ownerId = option?.ownerId;
+	params.curScene = option?.curScene;
+});
 
-async function login() {	
+async function login() {
 	const { code } = await uniLogin("weixin");
 	meStore.$patch({ inLogin: true }); // 登录时不需要传入JWT
 	await meStore.loginAndAutoSignUp(code);
 	meStore.$patch({ inLogin: false });
-	isLogin.value = (getToken('refreshToken') !== '');
+	isLogin.value = getToken("refreshToken") !== "";
 	// TODO 可以检查获取用户信息的nickName及avatarUrl是否为空，从而提示用户补充信息
+	if (params.curScene == 1) {
+		uni.navigateTo({
+			url: `/pages/questionnaire/write?questionnaireId=${params.questionnaireId}&ownerId=${params.ownerId}&friendId=${meStore.user?.id}`,
+		});
+	}
 }
 
 function toUpdateUser() {
@@ -132,7 +154,6 @@ function toUpdateUser() {
 		url: "/pages/me/updateUser",
 	});
 }
-
 </script>
 
 <style lang="scss" scoped>
@@ -224,20 +245,20 @@ function toUpdateUser() {
 	top: -20px;
 }
 
-.no-login{
+.no-login {
 	.logo {
 		height: 40vh;
 		width: 100vw;
 		margin-top: 5vh;
 		display: flex;
-    justify-content:center;
-    align-items:center;
+		justify-content: center;
+		align-items: center;
 	}
 	.tips {
 		width: 90vw;
 		border-top: 1px solid $uni-text-color-disable;
 		padding: 50px 20px;
-	
+
 		.tips-title {
 			font-size: 24px;
 			text-align: left;

@@ -14,4 +14,13 @@ onHide(() => {
 page{
   background-color: $theme-color-background;
 }
+
+.uni-collapse-item__title-box{
+  height: 60px !important;
+  line-height: 60px !important;
+}
+.uni-collapse-item__title-text{
+		font-size: 18px !important;
+    font-weight: 900;
+	}
 </style>

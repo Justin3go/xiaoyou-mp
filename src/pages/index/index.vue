@@ -73,8 +73,7 @@
 			</one-row-card>
 		</view>
 		<view v-if="!news.length" class="no-news">
-			<uni-icons type="mail-open-filled" size="80" color="#dbdbdb"></uni-icons>
-			<view class="no-news-text">暂无消息</view>
+			<empty></empty>
 		</view>
 		<uni-popup ref="newsPopup" type="dialog">
 			<uni-popup-dialog
@@ -98,6 +97,7 @@ import { useMutation } from "villus";
 import { ref } from "vue";
 import { userDefaultData, shareCodeUrl, bannerUrl1 } from "@/const";
 import oneRowCard from "@/components/oneRowCard.vue";
+import empty from "@/components/empty.vue";
 
 const meStore = useMeStore();
 const questionnaireCount = ref(12);
@@ -133,7 +133,6 @@ function closeNews() {
 }
 
 function confirmNews() {
-	// TODO 没有消息时的兜底显示
 	const deleteItem = news.value.findIndex((item) => item.id === curNewsId.value);
 	news.value.splice(deleteItem, 1);
 	newsPopup.value.close();
@@ -245,13 +244,6 @@ function confirmNews() {
 }
 
 .no-news {
-	width: 80px;
-	margin: auto;
-	padding-top: 80px;
-
-	.no-news-text {
-		text-align: center;
-		color: #dbdbdb;
-	}
+	padding-top: 50px;
 }
 </style>
