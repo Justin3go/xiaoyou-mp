@@ -38,8 +38,12 @@
 				<view class="update-user-entry"></view>
 			</view>
 			<view class="quick-entry">
-				<quick-entry-card></quick-entry-card>
-				<quick-entry-card></quick-entry-card>
+				<quick-entry-card>
+					<template #title>关于自己</template>
+				</quick-entry-card>
+				<quick-entry-card>
+					<template #title>关于他人</template>
+				</quick-entry-card>
 			</view>
 		</view>
 		<view class="service-card">

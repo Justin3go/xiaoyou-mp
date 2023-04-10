@@ -39,25 +39,25 @@
 				<view class="common-icon">
 					<uni-icons type="color" size="40" color="#767676"></uni-icons>
 				</view>
-				<view class="common-title">某功能</view>
+				<view class="common-title">填写问卷</view>
 			</view>
 			<view class="common-item">
 				<view class="common-icon">
 					<uni-icons type="color" size="40" color="#767676"></uni-icons>
 				</view>
-				<view class="common-title">某功能</view>
+				<view class="common-title">查看问卷</view>
 			</view>
 			<view class="common-item">
 				<view class="common-icon">
 					<uni-icons type="color" size="40" color="#767676"></uni-icons>
 				</view>
-				<view class="common-title">某功能</view>
+				<view class="common-title">查看排行</view>
 			</view>
 			<view class="common-item">
 				<view class="common-icon">
 					<uni-icons type="color" size="40" color="#767676"></uni-icons>
 				</view>
-				<view class="common-title">某功能</view>
+				<view class="common-title">心理问答</view>
 			</view>
 		</view>
 
