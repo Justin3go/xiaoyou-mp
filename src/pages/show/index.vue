@@ -8,7 +8,7 @@
 			<view v-if="showType === -1" class="no-data">
 				<empty info="请先选择问卷"></empty>
 			</view>
-			<radar v-if="showType === 0"></radar>
+			<radar v-if="showType === 0" :questionnaire-id="curValue"></radar>
 		</view>
 	</view>
 </template>
@@ -39,7 +39,7 @@ const range = computed(() => {
 */
 const range: Ref<RangeI[]> = ref([]);
 
-const curValue = ref();
+const curValue = ref("");
 const showType = ref(-1);
 
 watch(questionnaires, (newVal) => {
@@ -60,7 +60,7 @@ onShow(async () => {
 		});
 		throw new Error(`获取已填写问卷失败: ${error}`);
 	}
-	questionnaires.value = data?.me.questionnairesAsOwner.map((item: any) => item.questionnaire) || [];
+	questionnaires.value = data?.me.questionnairesAsOwnerAsFriend.map((item: any) => item.questionnaire) || [];
 });
 
 function chooseQuestionnaire(e: any) {

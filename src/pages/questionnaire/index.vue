@@ -89,7 +89,7 @@ onShow(async () => {
 		throw new Error(`获取已填写问卷失败: ${errMe}`);
 	}
 	console.log("dataMe: ", dataMe);
-	completed.value = dataMe?.me.questionnairesAsOwner.map((item: any) => item.questionnaire) || [];
+	completed.value = dataMe?.me.questionnairesAsOwnerAsFriend.map((item: any) => item.questionnaire) || [];
 	// TODO 这里只查了拥有者，后面可以查填写者，把为朋友填写的也可以查出来
 	if (errFindAllQ) {
 		uni.showToast({

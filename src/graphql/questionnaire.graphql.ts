@@ -3,7 +3,7 @@ import gql from "graphql-tag";
 export const meGQL = gql`
 	query me {
 		me {
-			questionnairesAsOwner {
+			questionnairesAsOwnerAsFriend {
 				questionnaire {
 					id
 					type
