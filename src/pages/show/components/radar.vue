@@ -205,8 +205,10 @@ async function getFriendListAsOwner() {
 function submit() {
 	const friend1 = friendList.value.find((item) => item.id === curSelect.value[0]);
 	chartData.series[1].data = friend1?.visualization || [0, 0, 0, 0, 0];
+  chartData.series[1].name = friend1?.nickName || "未选择";
   const friend2 = friendList.value.find((item) => item.id === curSelect.value[1]);
 	chartData.series[2].data = friend2?.visualization || [0, 0, 0, 0, 0];
+  chartData.series[2].name = friend2?.nickName || "未选择";
 }
 
 function checkboxChange(e: any) {
