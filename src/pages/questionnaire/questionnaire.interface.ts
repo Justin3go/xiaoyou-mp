@@ -1,5 +1,6 @@
 export interface QuestionnaireI {
 	id: string;
+	type: number;
 	title: string;
 	description: string;
 }

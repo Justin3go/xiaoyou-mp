@@ -55,15 +55,7 @@ const meStore = useMeStore();
 const activeTab = ref("已填");
 const tabs = ["已填", "未填"];
 
-const questionnaires: Ref<QuestionnaireI[]> = ref([
-	{ id: "1", title: "这是一份问卷1", description: "这是一份非常不错的问卷".repeat(6) },
-	{ id: "2", title: "这是一份问卷2", description: "这是一份非常不错的问卷".repeat(16) },
-	{ id: "3", title: "这是一份问卷3", description: "这是一份非常不错的问卷".repeat(6) },
-	{ id: "4", title: "这是一份问卷4", description: "这是一份非常不错的问卷".repeat(6) },
-	{ id: "5", title: "这是一份问卷5", description: "这是一份非常不错的问卷".repeat(6) },
-	{ id: "5", title: "这是一份问卷6", description: "这是一份非常不错的问卷".repeat(6) },
-	{ id: "5", title: "这是一份问卷7", description: "这是一份非常不错的问卷".repeat(6) },
-]);
+const questionnaires: Ref<QuestionnaireI[]> = ref([]);
 
 const completed: Ref<QuestionnaireI[]> = ref([]);
 // 总的减去已完成的就是未完成的
@@ -132,7 +124,7 @@ onShareAppMessage((res: any) => {
 		console.log("share target: ", res.target);
 	}
 	const userId = meStore.user?.id;
-	const questionnaireId = res.target.dataset.data
+	const questionnaireId = res.target.dataset.data;
 	return {
 		title: "帮助好友填写问卷",
 		path: `/pages/me/index?questionnaireId=${questionnaireId}&ownerId=${userId}&curScene=1`,

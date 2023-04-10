@@ -6,6 +6,7 @@ export const meGQL = gql`
 			questionnairesAsOwner {
 				questionnaire {
 					id
+					type
 					title
 					description
 				}
