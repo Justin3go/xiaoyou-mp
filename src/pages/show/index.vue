@@ -64,15 +64,7 @@ onShow(async () => {
 });
 
 function chooseQuestionnaire(e: any) {
-	console.log("questionnaires.value: ", questionnaires.value);
-	console.log(
-		"questionnaires.value.find((item) => (item.id == e))",
-		questionnaires.value.find((item) => item.id == e)
-	);
-	console.log("e: ", e);
-
 	showType.value = questionnaires.value.find((item) => item.id == e)?.type ?? -1;
-	console.log("show type: ", showType.value);
 }
 </script>
 
@@ -87,10 +79,12 @@ function chooseQuestionnaire(e: any) {
 	position: fixed;
 	top: -1px;
 	width: 100vw;
+	background-color: #FFFFFF;
+	z-index: 1000;
 }
 
 .top-placeholder {
-	height: 60px;
+	height: 50px;
 	width: 100vw;
 }
 </style>

@@ -25,12 +25,11 @@ page {
 }
 // show/index
 .uni-select {
-	height: 60px !important;
-	line-height: 60px !important;
+	height: 50px !important;
+	line-height: 50px !important;
 
 	.uni-select__input-text {
-		font-size: 18px !important;
-		font-weight: 900 !important;
+		font-size: 16px !important;
 	}
 }
 </style>
