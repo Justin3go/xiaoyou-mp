@@ -38,6 +38,7 @@ export const meGQL = gql`
 			countAsOwner
 			countAsFriend
 			nickName
+			avatarUrl
 		}
 	}
 `;
