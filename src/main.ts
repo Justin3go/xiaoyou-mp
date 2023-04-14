@@ -58,7 +58,7 @@ uni.addInterceptor("request", {
 				url: "/pages/me/index",
 				success: () => {
 					uni.showToast({
-						title: "登录凭证已失效，请重新登录！",
+						title: "登录凭证无效",  // TODO showToast只支持7个字的长度，优化显示
 						icon: "error",
 						duration: 2000,
 					});
