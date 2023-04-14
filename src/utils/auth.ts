@@ -1,3 +1,5 @@
+import { atob } from "./base64";
+
 // 在auth.js中定义设置和获取token的方法
 export function getToken(accessOrRefreshKey: "accessToken" | "refreshToken"): string {
 	return uni.getStorageSync(accessOrRefreshKey);

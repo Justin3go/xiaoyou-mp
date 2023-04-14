@@ -1,17 +1,18 @@
 <script setup lang="ts">
-import { onLaunch, onShow, onHide } from "@dcloudio/uni-app";
+import { onShow, onHide, onReady } from "@dcloudio/uni-app";
 import { meGQL } from "@/graphql/me.graphql";
 import { useMeStore } from "@/stores/me.store";
 import { useMutation } from "villus";
 
 const meStore = useMeStore();
 
-onLaunch(async () => {
-	console.log("App Launch");
-	await getUser();
+onReady(async () => {
+	console.log("App Ready");
+	
 });
-onShow(() => {
+onShow(async () => {
 	console.log("App Show");
+	await getUser();
 });
 onHide(() => {
 	console.log("App Hide");
