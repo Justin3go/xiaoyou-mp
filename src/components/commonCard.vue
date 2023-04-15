@@ -9,15 +9,6 @@
 			<view class="actions">
 				<view class="btn-container">
 					<button
-						v-if="props.secondBtn"
-						style="width: 80px; height: 40px; line-height: 40px; background-color: #0256ff; color: #ffffff"
-						:open-type="props.secondBtnType"
-						:data-data="props.secondBtnData"
-						@click="secondBtnClick"
-					>
-						{{ props.secondBtnText }}
-					</button>
-					<button
 						style="
 							width: 80px;
 							height: 40px;
@@ -30,6 +21,15 @@
 						@click="firstBtnClick"
 					>
 						{{ props.firstBtnText }}
+					</button>
+					<button
+						v-if="props.secondBtn"
+						style="width: 80px; height: 40px; line-height: 40px; background-color: #0256ff; color: #ffffff"
+						:open-type="props.secondBtnType"
+						:data-data="props.secondBtnData"
+						@click="secondBtnClick"
+					>
+						{{ props.secondBtnText }}
 					</button>
 				</view>
 			</view>
@@ -64,8 +64,7 @@ const props = withDefaults(defineProps<propsI>(), {
 	secondBtnData: "",
 });
 const emit = defineEmits<emitI>();
-const btnContainerWidth = props.secondBtn ? "160px" : "80px";
-const btnContainerMarginLeft = props.secondBtn ? "60%" : "80%";
+const btnContainerWidth = props.secondBtn ? "170px" : "80px";
 
 function clickAction() {
 	emit("clickAction");
@@ -132,10 +131,12 @@ function secondBtnClick() {
 	}
 	.actions {
 		width: 100%;
+		display: flex;
+		direction: rtl;
 		.btn-container {
 			display: flex;
 			width: v-bind(btnContainerWidth);
-			margin: 20px 0 0 v-bind(btnContainerMarginLeft);
+			margin: 20px 0 0 0;
 		}
 	}
 }

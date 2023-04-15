@@ -23,7 +23,7 @@
 			<view class="user-right">
 				<view class="questionnaire-container">
 					<view class="questionnaire-count">{{ questionnaireCount }}</view>
-					<view class="questionnaire-title">待填问卷</view>
+					<view class="questionnaire-title">待填</view>
 				</view>
 				<view class="share-container">
 					<view class="share-code">
@@ -148,6 +148,7 @@ function confirmNews() {
 }
 .user-container {
 	height: 80px;
+	width: calc(100vw - 20px);
 	display: flex;
 	padding: 10px;
 	justify-content: space-between;
@@ -157,8 +158,10 @@ function confirmNews() {
 		justify-content: space-around;
 		align-items: center;
 
+		width: calc(100% - 120px);
 		.info {
 			margin-left: 10px;
+			width: calc(100% - 70px);
 			.nick-name {
 				font-weight: 900;
 				font-size: 18px;
@@ -166,6 +169,10 @@ function confirmNews() {
 			}
 
 			.id {
+				width: 100%;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
 				margin-top: 5px;
 				font-size: 12px;
 				color: $theme-color-gray;
@@ -174,6 +181,7 @@ function confirmNews() {
 	}
 
 	.user-right {
+		width: 120px;
 		font-size: 15px;
 		display: flex;
 		justify-content: space-around;

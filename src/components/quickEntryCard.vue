@@ -19,7 +19,7 @@ interface propsI {
 
 const props = withDefaults(defineProps<propsI>(), {
 	containerHeight: "80px",
-	containerWidth: "190px",
+	containerWidth: "48vw",
 });
 const height = props.containerHeight;
 const width = props.containerWidth;

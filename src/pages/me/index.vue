@@ -23,19 +23,17 @@
 				<view class="info">
 					<image
 						class="avatar"
-						style="height: 90%; border-radius: 50%"
-						mode="heightFix"
+						style="height: 60px; width: 60px; border-radius: 50%"
 						:src="meStore.user?.avatarUrl || userDefaultData.avatarUrl"
 					></image>
 					<view class="text-info">
 						<view class="nick-name">{{ meStore.user?.nickName || userDefaultData.nickName }}</view>
-						<view class="id">id: {{ meStore.user?.id || userDefaultData.id }}</view>
+						<view class="id">{{ meStore.user?.id || userDefaultData.id }}</view>
 					</view>
 				</view>
 				<view class="icon" @click="toUpdateUser">
 					<uni-icons type="forward" size="30" color="#D3D3D3"></uni-icons>
 				</view>
-				<view class="update-user-entry"></view>
 			</view>
 			<view class="quick-entry">
 				<quick-entry-card>
@@ -161,7 +159,7 @@ async function login() {
 
 	// 登录后检测是否为分享链接进入，是则跳转问卷填写
 	const userId = meStore.user?.id;
-	const isNavigateTo =  params.curScene == 1 && userId !== params.ownerId;
+	const isNavigateTo = params.curScene == 1 && userId !== params.ownerId;
 	if (isNavigateTo) {
 		uni.navigateTo({
 			url: `/pages/questionnaire/write?questionnaireId=${params.questionnaireId}&ownerId=${params.ownerId}&friendId=${userId}`,
@@ -178,42 +176,44 @@ function toUpdateUser() {
 
 <style lang="scss" scoped>
 .top-card {
-	height: 35vh;
+	height: 300px;
 	width: 100vw;
 	overflow: hidden; // 形成BFC，使user-info中的margin-top生效
 	/* background-color: $theme-color-lighter-5; */
 	background: linear-gradient(to right, $theme-color-lighter-4, $theme-color-lighter-5);
-	border-radius: 20px;
+	border-radius: 0 0 20px 20px;
 
 	.user-info {
-		height: 27%;
-		width: 100%;
+		height: 90px;
+		width: calc(100% - 20px);
 		margin-top: 25%;
-		padding: 0 5%;
+		padding: 0 10px;
 		display: flex;
 		align-items: center;
+		justify-content: space-between;
 		.info {
 			height: 100%;
 			width: 80%;
 			display: flex;
 			align-items: center;
-			.nick-name {
-				font-weight: 900;
-				font-size: 18px;
-			}
-			.id {
-				margin-top: 5px;
-				font-size: 14px;
-				color: $theme-color-gray;
-			}
 			.text-info {
-				margin-left: 20px;
+				margin-left: 10px;
+				width: calc(100% - 70px);
+
+				.nick-name {
+					font-weight: 900;
+					font-size: 18px;
+				}
+				.id {
+					margin-top: 5px;
+					font-size: 12px;
+					color: $theme-color-gray;
+				}
 			}
 		}
 		.icon {
 			height: 30px;
 			width: 30px;
-			border-radius: 15px;
 		}
 	}
 
@@ -228,7 +228,7 @@ function toUpdateUser() {
 .service-card {
 	background-color: #ffffff;
 	width: calc(100vw - 40px);
-	height: 30vh;
+	height: 270px;
 	position: relative;
 	top: -20px;
 	z-index: -10;
