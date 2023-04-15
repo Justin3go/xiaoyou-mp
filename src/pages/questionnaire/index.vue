@@ -44,11 +44,12 @@ import commonCard from "@/components/commonCard.vue";
 import { onShareAppMessage, onShow } from "@dcloudio/uni-app";
 import { useQuery } from "villus";
 import { findAllQGQL, meGQL } from "@/graphql/questionnaire.graphql";
-import { computed, type Ref } from "@vue/reactivity";
+import type { Ref } from "@vue/reactivity";
 import type { QuestionnaireI } from "./questionnaire.interface";
 import { useMeStore } from "@/stores/me.store";
 import empty from "@/components/empty.vue";
 import { logoUrl } from "@/const";
+import { watchEffect } from "vue";
 
 const meStore = useMeStore();
 
@@ -58,8 +59,9 @@ const tabs = ["已填", "未填"];
 const questionnaires: Ref<QuestionnaireI[]> = ref([]);
 
 const completed: Ref<QuestionnaireI[]> = ref([]);
+const noCompleted: Ref<QuestionnaireI[]> = ref([])
 // 总的减去已完成的就是未完成的
-const noCompleted: Ref<QuestionnaireI[]> = computed(() => {
+watchEffect(() => {
 	const idSet = new Set();
 	completed.value?.forEach((item) => {
 		idSet.add(item.id);
@@ -70,8 +72,8 @@ const noCompleted: Ref<QuestionnaireI[]> = computed(() => {
 			res.push(item);
 		}
 	});
-	return res;
-});
+	noCompleted.value = res
+})
 
 onShow(async () => {
 	const { execute: exeMe } = useQuery({ query: meGQL });

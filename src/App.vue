@@ -11,8 +11,10 @@ onReady(async () => {
 	
 });
 onShow(async () => {
+	if(meStore.user === null) {
+		await getUser();
+	}
 	console.log("App Show");
-	await getUser();
 });
 onHide(() => {
 	console.log("App Hide");

@@ -137,6 +137,18 @@ onLoad(async (option) => {
 	params.questionnaireId = option?.questionnaireId;
 	params.ownerId = option?.ownerId;
 	params.curScene = option?.curScene;
+
+	// 如果是已经登录了的，且是点击好友分享链接进入的，就直接跳转到问卷填写页
+	const userId = meStore.user?.id;
+	// 1. userId存在代表已经登录
+	// 2. curScene==1代表是点击好友分享链接进入的
+	// 3. userId !== params.ownerId代表点击自己分享的链接不会跳转
+	const isNavigateTo = userId && params.curScene == 1 && userId !== params.ownerId;
+	if (isNavigateTo) {
+		uni.navigateTo({
+			url: `/pages/questionnaire/write?questionnaireId=${params.questionnaireId}&ownerId=${params.ownerId}&friendId=${userId}`,
+		});
+	}
 });
 
 async function login() {
@@ -146,9 +158,13 @@ async function login() {
 	meStore.$patch({ inLogin: false });
 	isLogin.value = getToken("refreshToken") !== "";
 	// TODO 可以检查获取用户信息的nickName及avatarUrl是否为空，从而提示用户补充信息
-	if (params.curScene == 1) {
+
+	// 登录后检测是否为分享链接进入，是则跳转问卷填写
+	const userId = meStore.user?.id;
+	const isNavigateTo =  params.curScene == 1 && userId !== params.ownerId;
+	if (isNavigateTo) {
 		uni.navigateTo({
-			url: `/pages/questionnaire/write?questionnaireId=${params.questionnaireId}&ownerId=${params.ownerId}&friendId=${meStore.user?.id}`,
+			url: `/pages/questionnaire/write?questionnaireId=${params.questionnaireId}&ownerId=${params.ownerId}&friendId=${userId}`,
 		});
 	}
 }

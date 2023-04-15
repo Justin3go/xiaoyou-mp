@@ -82,7 +82,7 @@ async function getQuestions(questionnaireId: string) {
 			icon: "error",
 			duration: 2000,
 		});
-		throw new Error(`获取问题列表失败: ${error}`)
+		throw new Error(`获取问题列表失败: ${error}`);
 	}
 	questionnaire.title = data?.findOneQ.title;
 	questionnaire.description = data?.findOneQ.description;
@@ -134,8 +134,8 @@ async function submit() {
 		});
 		throw new Error(`提交问卷失败: ${error}`);
 	}
-	uni.redirectTo({
-		url: "/pages/questionnaire/index",
+	uni.navigateBack({
+		delta: 1,
 	});
 }
 </script>
