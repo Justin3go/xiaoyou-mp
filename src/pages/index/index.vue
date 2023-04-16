@@ -98,6 +98,7 @@ import { ref } from "vue";
 import { userDefaultData, shareCodeUrl, bannerUrl1 } from "@/const";
 import oneRowCard from "@/components/oneRowCard.vue";
 import empty from "@/components/empty.vue";
+import { onShow } from "@dcloudio/uni-app";
 
 const meStore = useMeStore();
 const questionnaireCount = ref(12);
@@ -114,12 +115,20 @@ const newsPopup = ref();
 const curNewsId = ref("");
 const curNewsContent = ref("");
 
+onShow(async () => {
+	if(meStore.user === null) {
+		await getUser();
+	}
+	console.log("App Show");
+});
+
 async function getUser() {
 	const { execute } = useMutation(meGQL);
 	uni.showLoading({ title: "正在查询中..." });
 	const { data, error } = await execute();
 	console.log("query user data: ", data);
 	console.log("query user error: ", error);
+	meStore.$patch({ user:  data.me})
 }
 
 function clickNewsCard(item: { id: string; content: string }) {

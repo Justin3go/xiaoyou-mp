@@ -1,33 +1,17 @@
 <script setup lang="ts">
 import { onShow, onHide, onReady } from "@dcloudio/uni-app";
-import { meGQL } from "@/graphql/me.graphql";
-import { useMeStore } from "@/stores/me.store";
-import { useMutation } from "villus";
-
-const meStore = useMeStore();
 
 onReady(async () => {
 	console.log("App Ready");
 	
 });
 onShow(async () => {
-	if(meStore.user === null) {
-		await getUser();
-	}
 	console.log("App Show");
 });
 onHide(() => {
 	console.log("App Hide");
 });
 
-async function getUser() {
-	const { execute } = useMutation(meGQL);
-	uni.showLoading({ title: "正在查询中..." });
-	const { data, error } = await execute();
-	console.log("query user data: ", data);
-	console.log("query user error: ", error);
-	meStore.$patch({ user:  data.me})
-}
 </script>
 <style lang="scss">
 page {
