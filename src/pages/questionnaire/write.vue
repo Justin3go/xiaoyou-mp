@@ -36,7 +36,7 @@
 import { onLoad } from "@dcloudio/uni-app";
 import { reactive, ref, type Ref } from "vue";
 import { useQuery, useMutation } from "villus";
-import { findOneQGQL, writeGQL } from "@/graphql/questionnaire.graphql";
+import { findOneQGQL, findOneU2QGQL, writeGQL } from "@/graphql/questionnaire.graphql";
 import type { QuestionI } from "./questionnaire.interface";
 import { useMeStore } from "@/stores/me.store";
 
@@ -68,6 +68,7 @@ onLoad(async (option) => {
 	params.ownerId = option?.ownerId;
 	// 如果上个页面没有传递朋友(填写者)ID，就使用当前页面的全局用户ID，在分享给好友填写时极其有作用
 	params.friendId = option?.friendId || meStore.user?.id;
+	// TODO 检测该链接是否已经填写过
 	await getQuestions(params.questionnaireId);
 });
 

@@ -115,6 +115,8 @@ import { getToken } from "@/utils/auth";
 import { userDefaultData } from "@/const";
 import { onShow, onInit, onLoad, onReady } from "@dcloudio/uni-app";
 import { logoUrl } from "@/const";
+import { useMutation } from "villus";
+import { meGQL } from "@/graphql/me.graphql";
 
 const meStore = useMeStore();
 
@@ -136,12 +138,19 @@ onLoad(async (option) => {
 	params.ownerId = option?.ownerId;
 	params.curScene = option?.curScene;
 
-	// 如果是已经登录了的，且是点击好友分享链接进入的，就直接跳转到问卷填写页
-	const userId = meStore.user?.id;
+	// 内存中无登录信息，但storage中存有token，就重新获取用户信息
+	isLogin.value = getToken("refreshToken") !== "";
+	let userId = meStore.user?.id;
+	if(isLogin.value && !userId) {
+		console.log("重新获取用户信息...");
+		await getUser();
+		userId = meStore.user?.id;
+	}
 	// 1. userId存在代表已经登录
 	// 2. curScene==1代表是点击好友分享链接进入的
 	// 3. userId !== params.ownerId代表点击自己分享的链接不会跳转
 	const isNavigateTo = userId && params.curScene == 1 && userId !== params.ownerId;
+	// 如果是已经登录了的，且是点击好友分享链接进入的，就直接跳转到问卷填写页
 	if (isNavigateTo) {
 		uni.navigateTo({
 			url: `/pages/questionnaire/write?questionnaireId=${params.questionnaireId}&ownerId=${params.ownerId}&friendId=${userId}`,
@@ -165,6 +174,15 @@ async function login() {
 			url: `/pages/questionnaire/write?questionnaireId=${params.questionnaireId}&ownerId=${params.ownerId}&friendId=${userId}`,
 		});
 	}
+}
+
+async function getUser() {
+	const { execute } = useMutation(meGQL);
+	uni.showLoading({ title: "正在查询中..." });
+	const { data, error } = await execute();
+	console.log("query user data: ", data);
+	console.log("query user error: ", error);
+	meStore.$patch({ user:  data.me})
 }
 
 function toUpdateUser() {
