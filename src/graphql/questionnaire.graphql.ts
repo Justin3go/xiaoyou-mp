@@ -59,3 +59,9 @@ export const findOneU2QGQL = gql`
 		}
 	}
 `;
+
+export const isExistedGQL = gql`
+	query isExisted($data: findOneU2QInput!) {
+		isExisted(data: $data)
+	}
+`;

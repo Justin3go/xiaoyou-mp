@@ -36,7 +36,7 @@
 import { onLoad } from "@dcloudio/uni-app";
 import { reactive, ref, type Ref } from "vue";
 import { useQuery, useMutation } from "villus";
-import { findOneQGQL, findOneU2QGQL, writeGQL } from "@/graphql/questionnaire.graphql";
+import { findOneQGQL, isExistedGQL, writeGQL } from "@/graphql/questionnaire.graphql";
 import type { QuestionI } from "./questionnaire.interface";
 import { useMeStore } from "@/stores/me.store";
 
@@ -69,6 +69,20 @@ onLoad(async (option) => {
 	// 如果上个页面没有传递朋友(填写者)ID，就使用当前页面的全局用户ID，在分享给好友填写时极其有作用
 	params.friendId = option?.friendId || meStore.user?.id;
 	// TODO 检测该链接是否已经填写过
+	if (await isExisted()) {
+		console.log("已经填写过该问卷了");
+		// 帮助好友填写都是从登录页过来的，所以这里直接返回登录页面
+		uni.navigateBack({
+			delta: 1,
+			success: () => {
+				uni.showToast({
+					title: "已填写该问卷",
+					icon: "error",
+					duration: 2000,
+				});
+			},
+		});
+	}
 	await getQuestions(params.questionnaireId);
 });
 
@@ -92,6 +106,26 @@ async function getQuestions(questionnaireId: string) {
 		options: item.options.split("#"),
 	}));
 	console.log("questions: ", questions.value);
+}
+
+async function isExisted() {
+	const { execute } = useQuery({ query: isExistedGQL, variables: { data: { ...params } } });
+	uni.showLoading({ title: "正在校验中" });
+	const { error, data } = await execute();
+
+	if (error) {
+		uni.showToast({
+			title: `校验请求失败: ${error}`,
+			icon: "error",
+			duration: 2000,
+		});
+		throw new Error(`校验请求失败: ${error}`);
+	}
+	console.log("isExisted error: ", error);
+	console.log("isExisted data: ", data);
+
+	const isExisted: boolean = data?.isExisted;
+	return isExisted;
 }
 
 function radioChange(e: any) {
