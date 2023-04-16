@@ -160,8 +160,8 @@ async function save() {
 	}
 	// 成功修改后传递给pinia store
 	meStore.$patch({ user: { ...userData, ...user } });
-	uni.redirectTo({
-		url: "/pages/me/index",
+	uni.navigateBack({
+		delta: 1,
 	});
 }
 
@@ -184,7 +184,7 @@ async function uploadAvatar(filePath: string) {
 	const { OSSAccessKeyId, policy, signature } = data?.getPostObjectParams || {};
 
 	const imgType = filePath.split(".").pop();
-	const key = `wxmp/${userData?.id}.${imgType}`;
+	const key = `wxmp/${userData?.id}.${imgType}/${new Date().getTime()}`;
 	uni.showLoading({ title: "正在上传图片中..." });
 	const ossRes = await uniUploadFile({
 		url: ossHost, // 开发者服务器的URL。
