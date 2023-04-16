@@ -73,6 +73,7 @@ import { getPostObjectParamsGQL, updateUserGQL } from "@/graphql/me.graphql";
 import { uniUploadFile } from "@/apis/uni.api";
 import type { UserInfoI } from "@/stores/me.interface";
 import { isValidKey } from "@/utils/typescript";
+import { getStringWidth } from "@/utils/string";
 
 const meStore = useMeStore();
 
@@ -115,13 +116,16 @@ function bindDateChange(e: any) {
 
 async function save() {
 	// 昵称不能超过10个字符 // FIXME 后端同样应该做限制
-	if (user.nickName?.length > 10 || user.nickName?.length === 0) {
+	const len = getStringWidth(user.nickName)
+	console.log("nickName len: ", len);
+	
+	if (len > 10 || len === 0) {
 		uni.showToast({
-			title: "nickName不能为空且不能超过10个字符!",
+			title: "昵称长度错误",
 			icon: "error",
 			duration: 2000,
 		});
-		return;
+		throw new Error("昵称长度错误");
 	}
 
 	if (userData.avatarUrl !== user.avatarUrl) {

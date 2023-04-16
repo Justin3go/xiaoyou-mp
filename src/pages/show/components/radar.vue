@@ -30,7 +30,7 @@
 							<image
 								style="height: 80%; border-radius: 50%"
 								mode="heightFix"
-								:src="meStore.user?.avatarUrl || userDefaultData.avatarUrl"
+								:src="friend.avatarUrl || userDefaultData.avatarUrl"
 							></image>
 							<view class="nick-name">{{ friend.nickName }}</view>
 						</view>
@@ -57,6 +57,7 @@ import { useMeStore } from "@/stores/me.store";
 import { onBeforeMount } from "vue";
 import empty from "@/components/empty.vue";
 import { userDefaultData } from "@/const";
+import { omitLongString } from "@/utils/string"
 
 interface propsI {
 	questionnaireId: string;
@@ -85,34 +86,14 @@ const chartData = reactive({
 	],
 });
 const opts = {
-	timing: "easeOut",
-	duration: 1000,
-	rotate: false,
-	rotateLock: false,
 	color: ["#1890FF", "#91CB74", "#FAC858", "#EE6666", "#73C0DE", "#3CA272", "#FC8452", "#9A60B4", "#ea7ccc"],
 	padding: [5, 5, 5, 5],
-	fontSize: 13,
-	fontColor: "#666666",
 	dataLabel: false,
-	dataPointShape: true,
-	dataPointShapeType: "solid",
-	touchMoveLimit: 60,
 	enableScroll: false,
-	enableMarkLine: false,
 	legend: {
 		show: true,
 		position: "right",
 		lineHeight: 25,
-		float: "center",
-		padding: 5,
-		margin: 5,
-		backgroundColor: "rgba(0,0,0,0)",
-		borderColor: "rgba(0,0,0,0)",
-		borderWidth: 0,
-		fontSize: 13,
-		fontColor: "#666666",
-		hiddenColor: "#CECECE",
-		itemGap: 10,
 	},
 	extra: {
 		radar: {
@@ -122,44 +103,7 @@ const opts = {
 			opacity: 0.2,
 			max: 130,
 			labelShow: true,
-			gridEval: 1,
-			radius: 0,
-			axisLabel: false,
-			axisLabelTofix: 0,
-			labelColor: "#666666",
-			labelPointShow: false,
-			labelPointRadius: 3,
-			labelPointColor: "#CCCCCC",
-			border: false,
-			borderWidth: 2,
-			linearType: "none",
-		},
-		tooltip: {
-			showBox: true,
-			showArrow: true,
-			showCategory: false,
-			borderWidth: 0,
-			borderRadius: 0,
-			borderColor: "#000000",
-			borderOpacity: 0.7,
-			bgColor: "#000000",
-			bgOpacity: 0.7,
-			gridType: "solid",
-			dashLength: 4,
-			gridColor: "#CCCCCC",
-			boxPadding: 3,
-			fontSize: 13,
-			lineHeight: 20,
-			fontColor: "#FFFFFF",
-			legendShow: true,
-			legendShape: "auto",
-			splitLine: true,
-			horizentalLine: false,
-			xAxisLabel: false,
-			yAxisLabel: false,
-			labelBgColor: "#FFFFFF",
-			labelBgOpacity: 0.7,
-			labelFontColor: "#666666",
+			border: true,
 		},
 	},
 };
@@ -168,6 +112,7 @@ const sourceData: Ref<ListAsOwnerSourceDataI[]> = ref([]);
 const friendList: Ref<FriendItemI[]> = ref([]);
 const curSelect: Ref<string[]> = ref([]); // friendId Array
 
+// 区分朋友和自己，顺便规范化一下可视化结果
 watch(sourceData, (newVal) => {
 	newVal.forEach((item) => {
 		if (item.friend.id !== meStore.user?.id) {
@@ -205,10 +150,13 @@ async function getFriendListAsOwner() {
 function submit() {
 	const friend1 = friendList.value.find((item) => item.id === curSelect.value[0]);
 	chartData.series[1].data = friend1?.visualization || [0, 0, 0, 0, 0];
-  chartData.series[1].name = friend1?.nickName || "未选择";
-  const friend2 = friendList.value.find((item) => item.id === curSelect.value[1]);
+	const nickName1 = omitLongString(friend1?.nickName || "", 8) 
+	chartData.series[1].name = nickName1 || "未选择";
+	const friend2 = friendList.value.find((item) => item.id === curSelect.value[1]);
 	chartData.series[2].data = friend2?.visualization || [0, 0, 0, 0, 0];
-  chartData.series[2].name = friend2?.nickName || "未选择";
+	const nickName2 = omitLongString(friend2?.nickName || "", 8)
+	chartData.series[2].name = nickName2 || "未选择";
+	console.log("chartData.series: ", chartData.series);
 }
 
 function checkboxChange(e: any) {
