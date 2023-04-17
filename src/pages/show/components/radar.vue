@@ -198,7 +198,6 @@ function checkboxChange(e: any) {
 		.text {
 			height: 40px;
 			line-height: 40px;
-			font-weight: 900;
 			font-size: 18px;
 		}
 	}

@@ -37,25 +37,25 @@
 		<view class="common-container">
 			<view class="common-item">
 				<view class="common-icon">
-					<uni-icons type="color" size="40" color="#767676"></uni-icons>
+					<image style="height: 35px; width: 35px;" :src="indexIcon1"></image>
 				</view>
 				<view class="common-title">填写问卷</view>
 			</view>
 			<view class="common-item">
 				<view class="common-icon">
-					<uni-icons type="color" size="40" color="#767676"></uni-icons>
+					<image style="height: 35px; width: 35px;" :src="indexIcon2"></image>
 				</view>
 				<view class="common-title">查看问卷</view>
 			</view>
 			<view class="common-item">
 				<view class="common-icon">
-					<uni-icons type="color" size="40" color="#767676"></uni-icons>
+					<image style="height: 35px; width: 35px;" :src="indexIcon3"></image>
 				</view>
 				<view class="common-title">查看排行</view>
 			</view>
 			<view class="common-item">
 				<view class="common-icon">
-					<uni-icons type="color" size="40" color="#767676"></uni-icons>
+					<image style="height: 35px; width: 35px;" :src="indexIcon4"></image>
 				</view>
 				<view class="common-title">心理问答</view>
 			</view>
@@ -99,6 +99,7 @@ import { userDefaultData, shareCodeUrl, bannerUrl1 } from "@/const";
 import oneRowCard from "@/components/oneRowCard.vue";
 import empty from "@/components/empty.vue";
 import { onShow } from "@dcloudio/uni-app";
+import { indexIcon1, indexIcon2, indexIcon3, indexIcon4 } from "@/const"
 
 const meStore = useMeStore();
 const questionnaireCount = ref(12);
@@ -234,8 +235,8 @@ function confirmNews() {
 	margin: auto;
 	padding: 0 3vw;
 	.common-icon {
-		height: 40px;
-		width: 40px;
+		height: 35px;
+		width: 35px;
 		padding: 15px;
 		background-color: $theme-color-background;
 		border-radius: 15px;

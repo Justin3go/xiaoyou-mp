@@ -58,3 +58,13 @@ export const writerUrl = '/static/image/questionnairePage/writer.png'
 export const questionnaireUrl = '/static/image/questionnairePage/questionnaire.png'
 
 export const emptyUrl = '/static/image/noData.png'
+
+// icons
+
+export const indexIcon1 = '/static/image/icons/问卷填写.png'
+
+export const indexIcon2 = '/static/image/icons/问卷查看.png'
+
+export const indexIcon3 = '/static/image/icons/查看排行.png'
+
+export const indexIcon4 = '/static/image/icons/心理问答.png'

@@ -36,11 +36,17 @@
 				</view>
 			</view>
 			<view class="quick-entry">
-				<quick-entry-card>
+				<quick-entry-card @click="feedbackService">
 					<template #title>关于自己</template>
+					<template #icon>
+						<uni-icons type="auth" size="40" color="#FFFFFF"></uni-icons>
+					</template>
 				</quick-entry-card>
 				<quick-entry-card>
 					<template #title>关于他人</template>
+					<template #icon>
+						<uni-icons type="staff" size="40" color="#FFFFFF"></uni-icons>
+					</template>
 				</quick-entry-card>
 			</view>
 		</view>
@@ -49,53 +55,53 @@
 			<view class="service-ul">
 				<view class="service-li">
 					<view class="service-icon">
-						<uni-icons type="color" size="40" color="#767676"></uni-icons>
+						<uni-icons type="help" size="35" color="#030a27"></uni-icons>
 					</view>
-					<view class="service-title">某功能</view>
+					<view class="service-title">帮助中心</view>
+				</view>
+				<view class="service-li">
+					<view class="service-icon" @click="feedbackService">
+						<uni-icons type="chat" size="35" color="#030a27"></uni-icons>
+					</view>
+					<view class="service-title">意见反馈</view>
 				</view>
 				<view class="service-li">
 					<view class="service-icon">
-						<uni-icons type="color" size="40" color="#767676"></uni-icons>
+						<uni-icons type="flag" size="35" color="#030a27"></uni-icons>
 					</view>
-					<view class="service-title">某功能</view>
+					<view class="service-title">代码开源</view>
 				</view>
 				<view class="service-li">
 					<view class="service-icon">
-						<uni-icons type="color" size="40" color="#767676"></uni-icons>
+						<uni-icons type="headphones" size="35" color="#030a27"></uni-icons>
 					</view>
-					<view class="service-title">某功能</view>
-				</view>
-				<view class="service-li">
-					<view class="service-icon">
-						<uni-icons type="color" size="40" color="#767676"></uni-icons>
-					</view>
-					<view class="service-title">某功能</view>
+					<view class="service-title">智能客服</view>
 				</view>
 			</view>
 			<view class="service-ul">
 				<view class="service-li">
 					<view class="service-icon">
-						<uni-icons type="color" size="40" color="#767676"></uni-icons>
+						<uni-icons type="hand-up" size="35" color="#030a27"></uni-icons>
 					</view>
-					<view class="service-title">某功能</view>
+					<view class="service-title">支持我们</view>
 				</view>
 				<view class="service-li">
 					<view class="service-icon">
-						<uni-icons type="color" size="40" color="#767676"></uni-icons>
+						<uni-icons type="paperplane" size="35" color="#030a27"></uni-icons>
 					</view>
-					<view class="service-title">某功能</view>
+					<view class="service-title">分享小程序</view>
 				</view>
 				<view class="service-li">
 					<view class="service-icon">
-						<uni-icons type="color" size="40" color="#767676"></uni-icons>
+						<uni-icons type="info" size="35" color="#030a27"></uni-icons>
 					</view>
-					<view class="service-title">某功能</view>
+					<view class="service-title">关于笑友</view>
 				</view>
 				<view class="service-li">
 					<view class="service-icon">
-						<uni-icons type="color" size="40" color="#767676"></uni-icons>
+						<uni-icons type="more" size="35" color="#030a27"></uni-icons>
 					</view>
-					<view class="service-title">某功能</view>
+					<view class="service-title">更多</view>
 				</view>
 			</view>
 		</view>
@@ -141,7 +147,7 @@ onLoad(async (option) => {
 	// 内存中无登录信息，但storage中存有token，就重新获取用户信息
 	isLogin.value = getToken("refreshToken") !== "";
 	let userId = meStore.user?.id;
-	if(isLogin.value && !userId) {
+	if (isLogin.value && !userId) {
 		console.log("重新获取用户信息...");
 		await getUser();
 		userId = meStore.user?.id;
@@ -182,13 +188,18 @@ async function getUser() {
 	const { data, error } = await execute();
 	console.log("query user data: ", data);
 	console.log("query user error: ", error);
-	meStore.$patch({ user:  data.me})
+	meStore.$patch({ user: data.me });
 }
 
 function toUpdateUser() {
 	uni.navigateTo({
 		url: "/pages/me/updateUser",
 	});
+}
+
+// 相关服务
+function feedbackService() {
+	console.log("feedbackService...");
 }
 </script>
 
@@ -200,6 +211,10 @@ function toUpdateUser() {
 	/* background-color: $theme-color-lighter-5; */
 	background: linear-gradient(to right, $theme-color-lighter-4, $theme-color-lighter-5);
 	border-radius: 0 0 20px 20px;
+	position: relative;
+	top: 0;
+	left: 0;
+	z-index: 20;
 
 	.user-info {
 		height: 90px;
@@ -236,6 +251,7 @@ function toUpdateUser() {
 	}
 
 	.quick-entry {
+		padding: 0 1vw;
 		margin-top: 10px;
 		display: flex;
 		align-items: center;
@@ -249,7 +265,7 @@ function toUpdateUser() {
 	height: 270px;
 	position: relative;
 	top: -20px;
-	z-index: -10;
+	z-index: 10; // 不能为负，为负其所有点击事件都不会生效	
 	padding: 40px 20px 20px 20px;
 	.title {
 		font-size: 18px;
@@ -261,11 +277,12 @@ function toUpdateUser() {
 		margin-top: 20px;
 		.service-li {
 			.service-icon {
-				height: 40px;
-				width: 40px;
+				height: 35px;
+				width: 35px;
 				padding: 15px;
 				background-color: $theme-color-background;
 				border-radius: 15px;
+				z-index: 10;
 			}
 			.service-title {
 				/* width: 70px; */
