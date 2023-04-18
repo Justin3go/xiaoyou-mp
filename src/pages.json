@@ -79,6 +79,12 @@
 			"style": {
 				"navigationBarTitleText": "修改资料"
 			}
+		},
+		{
+			"path": "pages/me/rankList",
+			"style": {
+				"navigationBarTitleText": "排行榜"
+			}
 		}
 	],
 	"globalStyle": {

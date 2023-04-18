@@ -61,3 +61,35 @@ export const getPostObjectParamsGQL = gql`
 		}
 	}
 `;
+
+export const listAsOwnerGQL = gql`
+  query listAsOwner($questionnaireId: String!) {
+    listAsOwner(questionnaireId: $questionnaireId) {
+      friend {
+        id
+        nickName
+        avatarUrl
+      }
+      owner {
+        id
+      }
+      similarity
+    }
+	}
+`
+
+export const listAsFriendGQL = gql`
+  query listAsFriend($questionnaireId: String!) {
+    listAsFriend(questionnaireId: $questionnaireId) {
+      friend {
+        id
+      }
+      owner {
+        id
+				nickName
+        avatarUrl
+      }
+      similarity
+    }
+	}
+`

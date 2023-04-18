@@ -46,25 +46,21 @@ export const provincesInChina = [
 ];
 
 export const logoUrl = "/static/logo.jpg";
-
 export const ossHost = "https://oss.justin3go.com";
-
 export const bannerUrl1 = "https://oss.justin3go.com/banners/banner1.jpg";
-
 export const shareCodeUrl = '/static/image/indexPage/shareCode.png'
-
 export const writerUrl = '/static/image/questionnairePage/writer.png'
-
 export const questionnaireUrl = '/static/image/questionnairePage/questionnaire.png'
-
 export const emptyUrl = '/static/image/noData.png'
 
 // icons
-
 export const indexIcon1 = '/static/image/icons/问卷填写.png'
-
 export const indexIcon2 = '/static/image/icons/问卷查看.png'
-
 export const indexIcon3 = '/static/image/icons/查看排行.png'
-
 export const indexIcon4 = '/static/image/icons/心理问答.png'
+
+// rankList
+
+export const firstRank = '/static/image/list/first.png'
+export const secondRank = '/static/image/list/second.png'
+export const thirdRank = '/static/image/list/third.png'

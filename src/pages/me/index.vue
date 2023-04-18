@@ -36,18 +36,22 @@
 				</view>
 			</view>
 			<view class="quick-entry">
-				<quick-entry-card @click="feedbackService">
-					<template #title>关于自己</template>
-					<template #icon>
-						<uni-icons type="auth" size="40" color="#FFFFFF"></uni-icons>
-					</template>
-				</quick-entry-card>
-				<quick-entry-card>
-					<template #title>关于他人</template>
-					<template #icon>
-						<uni-icons type="staff" size="40" color="#FFFFFF"></uni-icons>
-					</template>
-				</quick-entry-card>
+				<view @click="toRankList('me')">
+					<quick-entry-card>
+						<template #title>关于自己</template>
+						<template #icon>
+							<uni-icons type="auth" size="40" color="#FFFFFF"></uni-icons>
+						</template>
+					</quick-entry-card>
+				</view>
+				<view @click="toRankList('other')">
+					<quick-entry-card>
+						<template #title>关于他人</template>
+						<template #icon>
+							<uni-icons type="staff" size="40" color="#FFFFFF"></uni-icons>
+						</template>
+					</quick-entry-card>
+				</view>
 			</view>
 		</view>
 		<view class="service-card">
@@ -195,6 +199,12 @@ function toUpdateUser() {
 	uni.navigateTo({
 		url: "/pages/me/updateUser",
 	});
+}
+
+function toRankList(option: "me" | "other") {
+	uni.navigateTo({
+		url: `/pages/me/rankList?option=${option}`
+	})
 }
 
 // 相关服务
