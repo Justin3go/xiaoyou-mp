@@ -188,7 +188,7 @@ async function uploadAvatar(filePath: string) {
 	const { OSSAccessKeyId, policy, signature } = data?.getPostObjectParams || {};
 
 	const imgType = filePath.split(".").pop();
-	const key = `wxmp/${userData?.id}.${imgType}/${new Date().getTime()}`;
+	const key = `wxmp/${userData?.id}/${new Date().getTime()}.${imgType}`;
 	uni.showLoading({ title: "正在上传图片中..." });
 	const ossRes = await uniUploadFile({
 		url: ossHost, // 开发者服务器的URL。
