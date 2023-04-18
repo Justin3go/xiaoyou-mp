@@ -4,10 +4,10 @@
 			<uni-data-select v-model="curValue" :localdata="range" @change="chooseQuestionnaire"></uni-data-select>
 		</view>
 		<view class="top-placeholder"></view>
-		<view v-if="!curQuestionnaireId" class="no-data">
+		<view v-show="!curQuestionnaireId" class="no-data">
 			<empty info="请先选择问卷"></empty>
 		</view>
-		<view v-if="curQuestionnaireId && !rankData[curQuestionnaireId].length" class="no-data">
+		<view v-if="curQuestionnaireId && !rankData[curQuestionnaireId]?.length" class="no-data">
 			<empty info="暂无排行，请先分享或帮助好友填写问卷"></empty>
 		</view>
 		<view class="rank-list" v-for="(item, index) in rankData[curQuestionnaireId]" :key="item.id">
@@ -48,6 +48,7 @@ import { meGQL } from "@/graphql/questionnaire.graphql";
 import type { rankDataI } from "./me.interface";
 import { listAsOwnerGQL, listAsFriendGQL } from "@/graphql/me.graphql";
 import { userDefaultData, firstRank, secondRank, thirdRank } from "@/const";
+import empty from "@/components/empty.vue";
 
 const meOrOther: Ref<"me" | "other"> = ref("me");
 

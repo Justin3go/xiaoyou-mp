@@ -85,6 +85,12 @@
 			"style": {
 				"navigationBarTitleText": "排行榜"
 			}
+		},
+		{
+			"path": "pages/me/helpService",
+			"style": {
+				"navigationBarTitleText": "帮助中心"
+			}
 		}
 	],
 	"globalStyle": {

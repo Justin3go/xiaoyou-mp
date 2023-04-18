@@ -58,7 +58,7 @@
 			<view class="title">相关服务</view>
 			<view class="service-ul">
 				<view class="service-li">
-					<view class="service-icon">
+					<view class="service-icon" @click="helpService">
 						<uni-icons type="help" size="35" color="#030a27"></uni-icons>
 					</view>
 					<view class="service-title">帮助中心</view>
@@ -70,10 +70,12 @@
 					<view class="service-title">意见反馈</view>
 				</view>
 				<view class="service-li">
-					<view class="service-icon">
-						<uni-icons type="flag" size="35" color="#030a27"></uni-icons>
-					</view>
-					<view class="service-title">代码开源</view>
+					<button class="share-btn" open-type="share">
+						<view class="service-icon">
+							<uni-icons type="paperplane" size="35" color="#030a27"></uni-icons>
+						</view>
+					</button>
+					<view class="service-title">分享小程序</view>
 				</view>
 				<view class="service-li">
 					<view class="service-icon">
@@ -90,12 +92,10 @@
 					<view class="service-title">支持我们</view>
 				</view>
 				<view class="service-li">
-					<button class="share-btn" open-type="share">
-						<view class="service-icon">
-							<uni-icons type="paperplane" size="35" color="#030a27"></uni-icons>
-						</view>
-					</button>
-					<view class="service-title">分享小程序</view>
+					<view class="service-icon">
+						<uni-icons type="flag" size="35" color="#030a27"></uni-icons>
+					</view>
+					<view class="service-title">代码开源</view>
 				</view>
 				<view class="service-li">
 					<view class="service-icon">
@@ -220,11 +220,11 @@ function toRankList(option: "me" | "other") {
 	});
 }
 
-function closeInfo(){
+function closeInfo() {
 	infoPopup.value.close();
 }
 
-function confirmInfo(){
+function confirmInfo() {
 	infoPopup.value.close();
 }
 
@@ -241,6 +241,12 @@ onShareAppMessage((res: any) => {
 });
 
 // 相关服务
+function helpService() {
+	uni.navigateTo({
+		url: "/pages/me/helpService",
+	});
+}
+
 function feedbackService() {
 	uni.setClipboardData({
 		data: feedbackUrl,
