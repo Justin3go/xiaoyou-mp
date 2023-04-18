@@ -90,9 +90,11 @@
 					<view class="service-title">支持我们</view>
 				</view>
 				<view class="service-li">
-					<view class="service-icon">
-						<uni-icons type="paperplane" size="35" color="#030a27"></uni-icons>
-					</view>
+					<button class="share-btn" open-type="share">
+						<view class="service-icon">
+							<uni-icons type="paperplane" size="35" color="#030a27"></uni-icons>
+						</view>
+					</button>
 					<view class="service-title">分享小程序</view>
 				</view>
 				<view class="service-li">
@@ -109,6 +111,15 @@
 				</view>
 			</view>
 		</view>
+		<uni-popup ref="infoPopup" type="dialog">
+			<uni-popup-dialog
+				type="success"
+				content="链接已经复制到剪贴板，请打开浏览器进行下一步操作"
+				:duration="3000"
+				@close="closeInfo"
+				@confirm="confirmInfo"
+			></uni-popup-dialog>
+		</uni-popup>
 		<view class="other-cards">
 			<one-row-card></one-row-card>
 		</view>
@@ -123,8 +134,8 @@ import quickEntryCard from "@/components/quickEntryCard.vue";
 import oneRowCard from "@/components/oneRowCard.vue";
 import { getToken } from "@/utils/auth";
 import { userDefaultData } from "@/const";
-import { onShow, onInit, onLoad, onReady } from "@dcloudio/uni-app";
-import { logoUrl } from "@/const";
+import { onShow, onInit, onLoad, onReady, onShareAppMessage } from "@dcloudio/uni-app";
+import { logoUrl, feedbackUrl } from "@/const";
 import { useMutation } from "villus";
 import { meGQL } from "@/graphql/me.graphql";
 
@@ -137,6 +148,8 @@ const params = reactive({
 	ownerId: "",
 	curScene: 0,
 });
+
+const infoPopup = ref();
 
 onShow(() => {
 	console.log("page me show...");
@@ -203,13 +216,38 @@ function toUpdateUser() {
 
 function toRankList(option: "me" | "other") {
 	uni.navigateTo({
-		url: `/pages/me/rankList?option=${option}`
-	})
+		url: `/pages/me/rankList?option=${option}`,
+	});
 }
+
+function closeInfo(){
+	infoPopup.value.close();
+}
+
+function confirmInfo(){
+	infoPopup.value.close();
+}
+
+onShareAppMessage((res: any) => {
+	if (res.from === "button") {
+		// 来自页面内分享按钮
+		console.log("share target: ", res.target);
+	}
+	return {
+		title: "我正在使用笑友小程序，快来一起使用吧~",
+		path: `/pages/me/index`,
+		imageUrl: logoUrl,
+	};
+});
 
 // 相关服务
 function feedbackService() {
-	console.log("feedbackService...");
+	uni.setClipboardData({
+		data: feedbackUrl,
+		success: function () {
+			infoPopup.value.open();
+		},
+	});
 }
 </script>
 
@@ -275,7 +313,7 @@ function feedbackService() {
 	height: 270px;
 	position: relative;
 	top: -20px;
-	z-index: 10; // 不能为负，为负其所有点击事件都不会生效	
+	z-index: 10; // 不能为负，为负其所有点击事件都不会生效
 	padding: 40px 20px 20px 20px;
 	.title {
 		font-size: 18px;
@@ -289,6 +327,7 @@ function feedbackService() {
 			.service-icon {
 				height: 35px;
 				width: 35px;
+				line-height: 35px;
 				padding: 15px;
 				background-color: $theme-color-background;
 				border-radius: 15px;
@@ -300,6 +339,18 @@ function feedbackService() {
 				text-align: center;
 				font-size: 14px;
 				color: $theme-color-gray;
+			}
+			.share-btn {
+				padding-left: 0;
+				padding-right: 0;
+				height: 65px;
+				width: 65px;
+				background-color: transparent;
+				border-color: transparent;
+			}
+
+			.share-btn::after {
+				border: none;
 			}
 		}
 	}

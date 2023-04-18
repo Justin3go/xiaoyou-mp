@@ -64,3 +64,5 @@ export const indexIcon4 = '/static/image/icons/心理问答.png'
 export const firstRank = '/static/image/list/first.png'
 export const secondRank = '/static/image/list/second.png'
 export const thirdRank = '/static/image/list/third.png'
+
+export const feedbackUrl = 'https://xh4u7d54le.feishu.cn/share/base/form/shrcntq0JjHrPv50gsBhU5yVRrc'
