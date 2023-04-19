@@ -91,6 +91,12 @@
 			"style": {
 				"navigationBarTitleText": "帮助中心"
 			}
+		},
+		{
+			"path": "pages/me/customerChatService",
+			"style": {
+				"navigationBarTitleText": "智能客服"
+			}
 		}
 	],
 	"globalStyle": {

@@ -78,7 +78,7 @@
 					<view class="service-title">分享小程序</view>
 				</view>
 				<view class="service-li">
-					<view class="service-icon">
+					<view class="service-icon" @click="customerChatService">
 						<uni-icons type="headphones" size="35" color="#030a27"></uni-icons>
 					</view>
 					<view class="service-title">智能客服</view>
@@ -253,6 +253,12 @@ function feedbackService() {
 		success: function () {
 			infoPopup.value.open();
 		},
+	});
+}
+
+function customerChatService() {
+	uni.navigateTo({
+		url: "/pages/me/customerChatService",
 	});
 }
 </script>
