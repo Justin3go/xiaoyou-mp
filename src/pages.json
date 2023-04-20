@@ -97,6 +97,18 @@
 			"style": {
 				"navigationBarTitleText": "智能客服"
 			}
+		},
+		{
+			"path": "pages/me/supportService",
+			"style": {
+				"navigationBarTitleText": "支持我们"
+			}
+		},
+		{
+			"path": "pages/me/aboutService",
+			"style": {
+				"navigationBarTitleText": "关于笑友"
+			}
 		}
 	],
 	"globalStyle": {

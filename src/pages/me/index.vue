@@ -86,25 +86,25 @@
 			</view>
 			<view class="service-ul">
 				<view class="service-li">
-					<view class="service-icon">
+					<view class="service-icon" @click="supportService">
 						<uni-icons type="hand-up" size="35" color="#030a27"></uni-icons>
 					</view>
 					<view class="service-title">支持我们</view>
 				</view>
 				<view class="service-li">
-					<view class="service-icon">
+					<view class="service-icon" @click="codeService">
 						<uni-icons type="flag" size="35" color="#030a27"></uni-icons>
 					</view>
 					<view class="service-title">代码开源</view>
 				</view>
 				<view class="service-li">
-					<view class="service-icon">
+					<view class="service-icon" @click="aboutService">
 						<uni-icons type="info" size="35" color="#030a27"></uni-icons>
 					</view>
 					<view class="service-title">关于笑友</view>
 				</view>
 				<view class="service-li">
-					<view class="service-icon">
+					<view class="service-icon" @click="moreService">
 						<uni-icons type="more" size="35" color="#030a27"></uni-icons>
 					</view>
 					<view class="service-title">更多</view>
@@ -135,7 +135,7 @@ import oneRowCard from "@/components/oneRowCard.vue";
 import { getToken } from "@/utils/auth";
 import { userDefaultData } from "@/const";
 import { onShow, onInit, onLoad, onReady, onShareAppMessage } from "@dcloudio/uni-app";
-import { logoUrl, feedbackUrl } from "@/const";
+import { logoUrl, feedbackUrl, sourceCodeUrl } from "@/const";
 import { useMutation } from "villus";
 import { meGQL } from "@/graphql/me.graphql";
 
@@ -258,6 +258,35 @@ function feedbackService() {
 function customerChatService() {
 	uni.navigateTo({
 		url: "/pages/me/customerChatService",
+	});
+}
+
+function supportService() {
+	uni.navigateTo({
+		url: "/pages/me/supportService",
+	});
+}
+
+function codeService() {
+	uni.setClipboardData({
+		data: sourceCodeUrl,
+		success: function () {
+			infoPopup.value.open();
+		},
+	});
+}
+
+function aboutService() {
+	uni.navigateTo({
+		url: "/pages/me/aboutService",
+	});
+}
+
+function moreService() {
+	uni.showToast({
+		title: "敬请期待",
+		icon: "none",
+		duration: 2000,
 	});
 }
 </script>

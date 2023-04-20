@@ -36,26 +36,26 @@
 
 		<view class="common-container">
 			<view class="common-item">
-				<view class="common-icon">
-					<image style="height: 35px; width: 35px;" :src="indexIcon1"></image>
-				</view>
-				<view class="common-title">填写问卷</view>
-			</view>
-			<view class="common-item">
-				<view class="common-icon">
-					<image style="height: 35px; width: 35px;" :src="indexIcon2"></image>
+				<view class="common-icon" @click="toQuestionnaire">
+					<image style="height: 45px; width: 45px" :src="indexIcon1"></image>
 				</view>
 				<view class="common-title">查看问卷</view>
 			</view>
 			<view class="common-item">
-				<view class="common-icon">
-					<image style="height: 35px; width: 35px;" :src="indexIcon3"></image>
+				<view class="common-icon" @click="toRankListMe">
+					<image style="height: 45px; width: 45px" :src="indexIcon2"></image>
 				</view>
-				<view class="common-title">查看排行</view>
+				<view class="common-title">关于自己</view>
 			</view>
 			<view class="common-item">
-				<view class="common-icon">
-					<image style="height: 35px; width: 35px;" :src="indexIcon4"></image>
+				<view class="common-icon" @click="toRankListOther">
+					<image style="height: 45px; width: 45px" :src="indexIcon3"></image>
+				</view>
+				<view class="common-title">关于他人</view>
+			</view>
+			<view class="common-item">
+				<view class="common-icon" @click="toQA">
+					<image style="height: 45px; width: 45px" :src="indexIcon4"></image>
 				</view>
 				<view class="common-title">心理问答</view>
 			</view>
@@ -99,7 +99,7 @@ import { userDefaultData, shareCodeUrl, bannerUrl1 } from "@/const";
 import oneRowCard from "@/components/oneRowCard.vue";
 import empty from "@/components/empty.vue";
 import { onShow } from "@dcloudio/uni-app";
-import { indexIcon1, indexIcon2, indexIcon3, indexIcon4 } from "@/const"
+import { indexIcon1, indexIcon2, indexIcon3, indexIcon4 } from "@/const";
 
 const meStore = useMeStore();
 const questionnaireCount = ref(12);
@@ -117,7 +117,7 @@ const curNewsId = ref("");
 const curNewsContent = ref("");
 
 onShow(async () => {
-	if(meStore.user === null) {
+	if (meStore.user === null) {
 		await getUser();
 	}
 	console.log("App Show");
@@ -128,7 +128,7 @@ async function getUser() {
 	const { data, error } = await execute();
 	console.log("query user data: ", data);
 	console.log("query user error: ", error);
-	meStore.$patch({ user:  data.me})
+	meStore.$patch({ user: data.me });
 }
 
 function clickNewsCard(item: { id: string; content: string }) {
@@ -145,6 +145,42 @@ function confirmNews() {
 	const deleteItem = news.value.findIndex((item) => item.id === curNewsId.value);
 	news.value.splice(deleteItem, 1);
 	newsPopup.value.close();
+}
+
+// common
+function toQuestionnaire() {
+	setTimeout(
+		() =>
+			uni.switchTab({
+				url: "/pages/questionnaire/index",
+			}),
+		500  // 等待点击动画
+	);
+}
+function toRankListMe() {
+	setTimeout(
+		() =>
+			uni.navigateTo({
+				url: "/pages/me/rankList?option=me",
+			}),
+		500
+	);
+}
+function toRankListOther() {
+	setTimeout(
+		() =>
+			uni.navigateTo({
+				url: "/pages/me/rankList?option=other",
+			}),
+		500
+	);
+}
+function toQA() {
+	uni.showToast({
+		title: "敬请期待",
+		icon: "none",
+		duration: 2000,
+	})
 }
 </script>
 
@@ -234,11 +270,19 @@ function confirmNews() {
 	margin: auto;
 	padding: 0 3vw;
 	.common-icon {
+		height: 45px;
+		width: 45px;
+		padding: 10px;
+		background-color: $theme-color-background;
+		border-radius: 15px;
+		box-shadow: 5px 5px 20px #dddddd;
+		transition: 0.3s;
+	}
+	.common-icon:active {
 		height: 35px;
 		width: 35px;
 		padding: 15px;
-		background-color: $theme-color-background;
-		border-radius: 15px;
+		box-shadow: 5px 5px 20px #ffffff;
 	}
 	.common-title {
 		margin-top: 5px;

@@ -59,7 +59,7 @@ const tabs = ["已填", "未填"];
 const questionnaires: Ref<QuestionnaireI[]> = ref([]);
 
 const completed: Ref<QuestionnaireI[]> = ref([]);
-const noCompleted: Ref<QuestionnaireI[]> = ref([])
+const noCompleted: Ref<QuestionnaireI[]> = ref([]);
 // 总的减去已完成的就是未完成的
 watchEffect(() => {
 	const idSet = new Set();
@@ -72,8 +72,8 @@ watchEffect(() => {
 			res.push(item);
 		}
 	});
-	noCompleted.value = res
-})
+	noCompleted.value = res;
+});
 
 const { execute: exeMe } = useQuery({ query: meGQL, paused: () => true });
 const { execute: exeFindAllQ } = useQuery({ query: findAllQGQL, paused: () => true });
