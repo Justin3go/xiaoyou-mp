@@ -75,16 +75,16 @@ watchEffect(() => {
 	noCompleted.value = res
 })
 
-onShow(async () => {
-	const { execute: exeMe } = useQuery({ query: meGQL });
-	const { execute: exeFindAllQ } = useQuery({ query: findAllQGQL });
+const { execute: exeMe } = useQuery({ query: meGQL, paused: () => true });
+const { execute: exeFindAllQ } = useQuery({ query: findAllQGQL, paused: () => true });
 
+onShow(async () => {
 	const { error: errMe, data: dataMe } = await exeMe();
 	const { error: errFindAllQ, data: dataFindAllQ } = await exeFindAllQ();
 
 	if (errMe) {
 		uni.showToast({
-			title: `获取已填写问卷失败: ${errMe}`,
+			title: `获取已填写问卷失败`,
 			icon: "error",
 			duration: 2000,
 		});
@@ -95,7 +95,7 @@ onShow(async () => {
 	// TODO 这里只查了拥有者，后面可以查填写者，把为朋友填写的也可以查出来
 	if (errFindAllQ) {
 		uni.showToast({
-			title: `获取所有问卷失败: ${errFindAllQ}`,
+			title: `获取所有问卷失败`,
 			icon: "error",
 			duration: 2000,
 		});

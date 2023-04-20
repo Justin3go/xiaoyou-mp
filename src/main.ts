@@ -58,7 +58,7 @@ uni.addInterceptor("request", {
 				url: "/pages/me/index",
 				success: () => {
 					uni.showToast({
-						title: "登录凭证无效", // TODO showToast只支持7个字的长度，优化显示
+						title: "登录凭证无效",
 						icon: "error",
 						duration: 2000,
 					});
@@ -72,7 +72,7 @@ uni.addInterceptor("request", {
 	},
 	fail(err) {
 		uni.showToast({
-			title: `请求错误: ${err}`,
+			title: `网络请求错误`,
 			icon: "error",
 			duration: 2000,
 		});

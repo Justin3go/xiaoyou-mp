@@ -58,11 +58,13 @@ const result: Ref<number[]> = ref([]);
 onLoad(async (option) => {
 	if (!option?.questionnaireId || !option?.ownerId) {
 		uni.showToast({
-			title: `页面参数有误，无法正常加载: questionnaireId: ${option?.questionnaireId}; ownerId: ${option?.ownerId}`,
+			title: "页面参数有误",
 			icon: "error",
 			duration: 3000,
 		});
-		throw new Error("页面参数有误");
+		throw new Error(
+			`页面参数有误，无法正常加载: questionnaireId: ${option?.questionnaireId}; ownerId: ${option?.ownerId}`
+		);
 	}
 	params.questionnaireId = option?.questionnaireId;
 	params.ownerId = option?.ownerId;
@@ -92,7 +94,7 @@ async function getQuestions(questionnaireId: string) {
 
 	if (error) {
 		uni.showToast({
-			title: `获取问题列表失败: ${error}`,
+			title: `获取问题列表失败`,
 			icon: "error",
 			duration: 2000,
 		});
@@ -158,7 +160,7 @@ async function submit() {
 	console.log("submit error: ", error);
 	if (error) {
 		uni.showToast({
-			title: `提交问卷失败: ${error}`,
+			title: `提交问卷失败`,
 			icon: "error",
 			duration: 2000,
 		});

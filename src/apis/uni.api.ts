@@ -14,7 +14,7 @@ export function uniLogin(
 			},
 			fail: (err) => {
 				uni.showToast({
-					title: `获取微信登录凭证code失败: ${err}`,
+					title: `获取微信code失败`,
 					icon: "error",
 					duration: 2000,
 				});
@@ -33,7 +33,7 @@ export function uniUploadFile(data: UniNamespace.UploadFileOption): Promise<UniA
 			},
 			fail: (err) => {
 				uni.showToast({
-					title: `上传文件至oss失败: ${err}`,
+					title: `文件上传oss失败`,
 					icon: "error",
 					duration: 2000,
 				});

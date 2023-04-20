@@ -21,11 +21,11 @@ export const useMeStore = defineStore("me", {
 
 			if (error) {
 				uni.showToast({
-					title: `登录失败: ${error}`,
+					title: `登录失败`,
 					icon: "error",
 					duration: 2000,
 				});
-				return error;
+				throw new Error(`登录失败: ${error}`)
 			}
 
 			const { accessToken, refreshToken, user } = data?.loginAndAutoSignUp || {};

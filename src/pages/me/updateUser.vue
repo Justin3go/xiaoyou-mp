@@ -155,7 +155,7 @@ async function save() {
 
 	if (error) {
 		uni.showToast({
-			title: `保存修改失败: ${error}`,
+			title: `保存修改失败`,
 			icon: "error",
 			duration: 2000,
 		});
@@ -175,7 +175,7 @@ async function uploadAvatar(filePath: string) {
 	const { error, data } = await execute();
 	if (error) {
 		uni.showToast({
-			title: `上传头像失败: ${error}`,
+			title: `上传头像失败`,
 			icon: "error",
 			duration: 2000,
 		});

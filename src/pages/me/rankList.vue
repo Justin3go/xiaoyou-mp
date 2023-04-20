@@ -94,7 +94,7 @@ async function getListAsOwner(questionnaireId: string) {
 	const { error, data } = await execute();
 	if (error) {
 		uni.showToast({
-			title: `获取排行榜失败: ${error}`,
+			title: `获取排行榜失败`,
 			icon: "error",
 			duration: 2000,
 		});
@@ -119,7 +119,7 @@ async function getListAsFriend(questionnaireId: string) {
 	const { error, data } = await execute();
 	if (error) {
 		uni.showToast({
-			title: `获取排行榜失败: ${error}`,
+			title: `获取排行榜失败`,
 			icon: "error",
 			duration: 2000,
 		});

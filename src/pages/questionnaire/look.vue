@@ -53,11 +53,13 @@ const result: Ref<any> = ref({});
 onLoad(async (option) => {
 	if (!option?.questionnaireId || !option?.ownerId || !option?.friendId) {
 		uni.showToast({
-			title: `页面参数有误，无法正常加载: questionnaireId: ${option?.questionnaireId}; ownerId: ${option?.ownerId}; friendId: ${option?.friendId}`,
+			title: `页面参数有误`,
 			icon: "error",
 			duration: 3000,
 		});
-		throw new Error("页面参数有误");
+		throw new Error(
+			`页面参数有误，无法正常加载: questionnaireId: ${option?.questionnaireId}; ownerId: ${option?.ownerId}; friendId: ${option?.friendId}`
+		);
 	}
 	params.questionnaireId = option?.questionnaireId;
 	params.ownerId = option?.ownerId;
@@ -72,7 +74,7 @@ async function getQuestions(questionnaireId: string) {
 
 	if (error) {
 		uni.showToast({
-			title: `获取问题列表失败: ${error}`,
+			title: `获取问题列表失败`,
 			icon: "error",
 			duration: 2000,
 		});
@@ -94,14 +96,14 @@ async function getResults() {
 
 	if (error) {
 		uni.showToast({
-			title: `获取结果列表失败: ${error}`,
+			title: `获取结果列表失败`,
 			icon: "error",
 			duration: 2000,
 		});
 		throw new Error(`获取结果列表失败: ${error}`);
 	}
-  console.log("get result data: ", data);
-  
+	console.log("get result data: ", data);
+
 	result.value = JSON.parse(data?.findOneU2Q.result);
 	console.log("result: ", result.value);
 }
