@@ -113,7 +113,7 @@
 		</view>
 		<uni-popup ref="infoPopup" type="dialog">
 			<uni-popup-dialog
-				type="success"
+				type="info"
 				content="链接已经复制到剪贴板，请打开浏览器进行下一步操作"
 				:duration="3000"
 				@close="closeInfo"
@@ -134,7 +134,7 @@ import quickEntryCard from "@/components/quickEntryCard.vue";
 import oneRowCard from "@/components/oneRowCard.vue";
 import { getToken } from "@/utils/auth";
 import { userDefaultData } from "@/const";
-import { onShow, onInit, onLoad, onReady, onShareAppMessage } from "@dcloudio/uni-app";
+import { onShow, onLoad, onShareAppMessage } from "@dcloudio/uni-app";
 import { logoUrl, feedbackUrl, sourceCodeUrl } from "@/const";
 import { useMutation } from "villus";
 import { meGQL } from "@/graphql/me.graphql";

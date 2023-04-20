@@ -22,14 +22,16 @@
 			</view>
 			<view class="user-right">
 				<view class="questionnaire-container">
-					<view class="questionnaire-count">{{ questionnaireCount }}</view>
-					<view class="questionnaire-title">待填</view>
-				</view>
-				<view class="share-container">
-					<view class="share-code">
-						<image style="height: 20px; width: 20px" :src="shareCodeUrl"></image>
+					<view class="questionnaire-count">
+						{{ dataFriend?.me.countAsFriend ?? "--" }}
 					</view>
-					<view class="share-title">分享码</view>
+					<view class="questionnaire-title">已填</view>
+				</view>
+				<view class="owner-container">
+					<view class="owner-code">
+						{{ dataOwner?.me.countAsOwner ?? "--" }}
+					</view>
+					<view class="owner-title">被填</view>
 				</view>
 			</view>
 		</view>
@@ -93,34 +95,65 @@
 <script setup lang="ts">
 import { meGQL } from "@/graphql/me.graphql";
 import { useMeStore } from "@/stores/me.store";
-import { useMutation } from "villus";
-import { ref } from "vue";
-import { userDefaultData, shareCodeUrl, bannerUrl1 } from "@/const";
+import { useMutation, useQuery } from "villus";
+import { ref, watch } from "vue";
+import { userDefaultData, bannerUrl1 } from "@/const";
 import oneRowCard from "@/components/oneRowCard.vue";
 import empty from "@/components/empty.vue";
-import { onShow } from "@dcloudio/uni-app";
+import { onPullDownRefresh, onShow } from "@dcloudio/uni-app";
 import { indexIcon1, indexIcon2, indexIcon3, indexIcon4 } from "@/const";
+import { countAsFriendGQL, countAsOwnerGQL } from "@/graphql/index.graphql";
 
 const meStore = useMeStore();
-const questionnaireCount = ref(12);
 // TODO 消息服务端不做记录，只做保存，推送过来之后就删除了，所以这里后面需要保存在本地
-const news = ref([
-	{ id: "1", content: "你有新的消息通知" },
-	{ id: "2", content: "你有新的消息通知" },
-	{ id: "3", content: "你有新的消息通知" },
-	{ id: "4", content: "你有新的消息通知" },
-	{ id: "5", content: "你有新的消息通知:这是一则非常非常非常非常非常非常非常非常非常非常非常非常长的消息内容" },
-]);
+const news = ref([]);
 // 更多消息的弹窗
 const newsPopup = ref();
 const curNewsId = ref("");
 const curNewsContent = ref("");
 
+const {
+	data: dataFriend,
+	execute: executeFriend,
+	error: errorFriend,
+} = useQuery({ query: countAsFriendGQL, paused: () => true });
+const {
+	data: dataOwner,
+	execute: executeOwner,
+	error: errorOwner,
+} = useQuery({ query: countAsOwnerGQL, paused: () => true });
+
+watch(errorFriend, (newVal) => {
+	uni.showToast({
+		title: `获取数量失败`,
+		icon: "error",
+		duration: 2000,
+	});
+	throw new Error(`获取数量失败errorFriend: ${newVal}`);
+});
+
+watch(errorOwner, (newVal) => {
+	uni.showToast({
+		title: `获取数量失败`,
+		icon: "error",
+		duration: 2000,
+	});
+	throw new Error(`获取数量失败errorOwner: ${newVal}`);
+});
+
 onShow(async () => {
 	if (meStore.user === null) {
 		await getUser();
 	}
+	await executeFriend();
+	await executeOwner();
 	console.log("App Show");
+});
+
+onPullDownRefresh(async () => {
+	await executeFriend();
+	await executeOwner();
+	uni.stopPullDownRefresh();
 });
 
 async function getUser() {
@@ -128,7 +161,9 @@ async function getUser() {
 	const { data, error } = await execute();
 	console.log("query user data: ", data);
 	console.log("query user error: ", error);
-	meStore.$patch({ user: data.me });
+	if(data?.me) {
+		meStore.$patch({ user: data.me });
+	}
 }
 
 function clickNewsCard(item: { id: string; content: string }) {
@@ -154,7 +189,7 @@ function toQuestionnaire() {
 			uni.switchTab({
 				url: "/pages/questionnaire/index",
 			}),
-		500  // 等待点击动画
+		500 // 等待点击动画
 	);
 }
 function toRankListMe() {
@@ -180,7 +215,7 @@ function toQA() {
 		title: "敬请期待",
 		icon: "none",
 		duration: 2000,
-	})
+	});
 }
 </script>
 
@@ -241,16 +276,16 @@ function toQA() {
 				text-align: center;
 			}
 		}
-		.share-container {
-			width: 70px;
+		.owner-container {
+			width: 60px;
 			height: 55px;
 			border-left: 1px solid $theme-color-gray-lighter;
-			.share-code {
+			.owner-code {
 				width: 100%;
 				display: flex;
 				justify-content: center;
 			}
-			.share-title {
+			.owner-title {
 				margin-top: 15px;
 				text-align: center;
 			}
