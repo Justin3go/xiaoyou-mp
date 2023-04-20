@@ -88,7 +88,6 @@ onLoad(async (option) => {
 async function getQuestions(questionnaireId: string) {
 	// 需要在获取到questionnaireId再执行请求
 	const { execute } = useQuery({ query: findOneQGQL, variables: { questionnaireId }, paused: () => true });
-	uni.showLoading({ title: "正在加载问题列表" });
 	const { error, data } = await execute();
 
 	if (error) {
@@ -150,7 +149,6 @@ async function submit() {
 	}
 
 	const { execute } = useMutation(writeGQL);
-	uni.showLoading({ title: "正在提交数据中" });
 	const { error } = await execute({
 		data: {
 			...params,

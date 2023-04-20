@@ -125,7 +125,6 @@ onShow(async () => {
 
 async function getUser() {
 	const { execute } = useMutation(meGQL);
-	uni.showLoading({ title: "正在查询中..." });
 	const { data, error } = await execute();
 	console.log("query user data: ", data);
 	console.log("query user error: ", error);

@@ -17,7 +17,6 @@ export const useMeStore = defineStore("me", {
 			// TODO 可以检查获取用户信息的nickName及avatarUrl是否为空，从而提示用户补充信息
 			const { execute } = useMutation(loginAndAutoSignUpGQL);
 
-			uni.showLoading({ title: "正在登录中..." });
 			const { data, error } = await execute({ data: { code } });
 
 			if (error) {

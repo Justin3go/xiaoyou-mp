@@ -21,6 +21,7 @@ let inRefresh = false;
 // 请求拦截器
 uni.addInterceptor("request", {
 	async invoke(request) {
+		uni.showLoading({ title: "正在请求中..." });
 		const meStore = useMeStore();
 		if (meStore.inLogin || inRefresh) return request;
 
@@ -53,12 +54,11 @@ uni.addInterceptor("request", {
 			setToken("refreshToken", newRefreshToken);
 		} else {
 			// refreshToken过期，需要重新登录
-			// FIXME 如果不在四个TAB页，这里应该是有问题的
-			uni.switchTab({
+			uni.reLaunch({
 				url: "/pages/me/index",
 				success: () => {
 					uni.showToast({
-						title: "登录凭证无效",  // TODO showToast只支持7个字的长度，优化显示
+						title: "登录凭证无效", // TODO showToast只支持7个字的长度，优化显示
 						icon: "error",
 						duration: 2000,
 					});

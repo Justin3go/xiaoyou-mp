@@ -149,7 +149,6 @@ async function save() {
 	console.log("userParams: ", userParams);
 
 	const { execute } = useMutation(updateUserGQL);
-	uni.showLoading({ title: "正在保存修改中..." });
 	const { error, data } = await execute({ data: userParams });
 	console.log("user update error: ", error);
 	console.log("user update data: ", data);
@@ -188,7 +187,6 @@ async function uploadAvatar(filePath: string) {
 
 	const imgType = filePath.split(".").pop();
 	const key = `wxmp/${userData?.id}/${new Date().getTime()}.${imgType}`;
-	uni.showLoading({ title: "正在上传图片中..." });
 	const ossRes = await uniUploadFile({
 		url: ossHost, // 开发者服务器的URL。
 		filePath,
