@@ -53,7 +53,7 @@ export const updateUserGQL = gql`
 `;
 
 export const getPostObjectParamsGQL = gql`
-	query getPostObjectParams {
+	mutation getPostObjectParams {
 		getPostObjectParams {
 			OSSAccessKeyId
 			policy
@@ -95,7 +95,7 @@ export const listAsFriendGQL = gql`
 `;
 
 export const chatGQL = gql`
-	query chat($talk: String!) {
+	mutation chat($talk: String!) {
 		customerChat(talk: $talk) {
 			knowledge
 			text

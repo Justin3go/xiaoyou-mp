@@ -44,7 +44,7 @@ import leftBubble from "./leftBubble.vue";
 import rightBubble from "./rightBubble.vue";
 import type { messagesI } from "./chat.interface";
 import { chatGQL } from "@/graphql/me.graphql";
-import { useQuery } from "villus";
+import { useMutation } from "villus";
 import { logoUrl } from "@/const";
 import { useMeStore } from "@/stores/me.store";
 
@@ -60,12 +60,11 @@ async function submit() {
 		text: input.value,
 		time: new Date().getTime(),
 	});
-	const { execute } = useQuery({ query: chatGQL, variables: { talk: input.value } });
-	uni.showLoading({ title: "正在加载中" });
-	const { error, data } = await execute();
+	const { execute } = useMutation(chatGQL);
+	const { error, data } = await execute({ talk: input.value })
 	if (error) {
 		uni.showToast({
-			title: `加载错误: ${error}`,
+			title: `加载错误`,
 			icon: "error",
 			duration: 3000,
 		});

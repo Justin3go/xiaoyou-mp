@@ -57,7 +57,7 @@ import { useMeStore } from "@/stores/me.store";
 import { onBeforeMount } from "vue";
 import empty from "@/components/empty.vue";
 import { userDefaultData } from "@/const";
-import { omitLongString } from "@/utils/string"
+import { omitLongString } from "@/utils/string";
 
 interface propsI {
 	questionnaireId: string;
@@ -74,7 +74,6 @@ const chartData = reactive({
 			name: "自己",
 			data: [0, 0, 0, 0, 0],
 		},
-		// TODO 截断名字
 		{
 			name: "未选择",
 			data: [0, 0, 0, 0, 0],
@@ -132,12 +131,17 @@ onBeforeMount(async () => {
 	await getFriendListAsOwner();
 });
 
+const { execute } = useQuery({
+	query: listAsOwnerGQL,
+	variables: { questionnaireId: props.questionnaireId },
+	paused: () => true, // 初始不需要数据，需要等用户选择之后再执行
+});
+
 async function getFriendListAsOwner() {
-	const { execute } = useQuery({ query: listAsOwnerGQL, variables: { questionnaireId: props.questionnaireId } });
 	const { error, data } = await execute();
 	if (error) {
 		uni.showToast({
-			title: `获取朋友列表失败: ${error}`,
+			title: `获取朋友列表失败`,
 			icon: "error",
 			duration: 2000,
 		});
@@ -150,11 +154,11 @@ async function getFriendListAsOwner() {
 function submit() {
 	const friend1 = friendList.value.find((item) => item.id === curSelect.value[0]);
 	chartData.series[1].data = friend1?.visualization || [0, 0, 0, 0, 0];
-	const nickName1 = omitLongString(friend1?.nickName || "", 8) 
+	const nickName1 = omitLongString(friend1?.nickName || "", 8);
 	chartData.series[1].name = nickName1 || "未选择";
 	const friend2 = friendList.value.find((item) => item.id === curSelect.value[1]);
 	chartData.series[2].data = friend2?.visualization || [0, 0, 0, 0, 0];
-	const nickName2 = omitLongString(friend2?.nickName || "", 8)
+	const nickName2 = omitLongString(friend2?.nickName || "", 8);
 	chartData.series[2].name = nickName2 || "未选择";
 	console.log("chartData.series: ", chartData.series);
 }

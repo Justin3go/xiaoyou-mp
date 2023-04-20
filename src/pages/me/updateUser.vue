@@ -172,8 +172,7 @@ async function save() {
 // 上传头像，规定头像的文件大小不能超过1mb
 async function uploadAvatar(filePath: string) {
 	// 1. 请求服务端签名凭证
-	const { execute } = useQuery({ query: getPostObjectParamsGQL });
-	uni.showLoading({ title: "正在请求上传凭证中..." });
+	const { execute } = useMutation(getPostObjectParamsGQL);
 	const { error, data } = await execute();
 	if (error) {
 		uni.showToast({

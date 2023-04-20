@@ -67,7 +67,7 @@ onLoad(async (option) => {
 });
 
 async function getQuestions(questionnaireId: string) {
-	const { execute } = useQuery({ query: findOneQGQL, variables: { questionnaireId } });
+	const { execute } = useQuery({ query: findOneQGQL, variables: { questionnaireId }, paused: () => true });
 	uni.showLoading({ title: "正在加载问题列表" });
 	const { error, data } = await execute();
 
@@ -89,7 +89,7 @@ async function getQuestions(questionnaireId: string) {
 }
 
 async function getResults() {
-	const { execute } = useQuery({ query: findOneU2QGQL, variables: { data: { ...params } } });
+	const { execute } = useQuery({ query: findOneU2QGQL, variables: { data: { ...params } }, paused: () => true });
 	uni.showLoading({ title: "正在加载结果列表" });
 	const { error, data } = await execute();
 	console.log("get result error: ", error);

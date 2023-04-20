@@ -39,10 +39,9 @@
 	</view>
 </template>
 <script setup lang="ts">
-import { onLoad, onShow } from "@dcloudio/uni-app";
+import { onLoad } from "@dcloudio/uni-app";
 import { ref, watch, type Ref } from "vue";
 import type { RangeI } from "../show/show.interface";
-import type { QuestionnaireI } from "../questionnaire/questionnaire.interface";
 import { useQuery } from "villus";
 import { meGQL } from "@/graphql/questionnaire.graphql";
 import type { rankDataI } from "./me.interface";
@@ -52,14 +51,24 @@ import empty from "@/components/empty.vue";
 
 const meOrOther: Ref<"me" | "other"> = ref("me");
 
-const questionnaires: Ref<QuestionnaireI[]> = ref([]);
+const { data: questionnaires, error: questionnairesError } = useQuery({ query: meGQL });
+// const questionnaires: Ref<QuestionnaireI[]> = ref([]);
 const range: Ref<RangeI[]> = ref([]);
 
 watch(questionnaires, (newVal) => {
-	range.value = newVal.map((item) => ({
-		value: item.id,
-		text: item.title,
+	range.value = newVal?.me.questionnairesAsOwnerAsFriend.map((item: any) => ({
+		value: item.questionnaire.id,
+		text: item.questionnaire.title,
 	}));
+});
+
+watch(questionnairesError, (newVal) => {
+	uni.showToast({
+		title: "获取问卷失败",
+		icon: "error",
+		duration: 2000,
+	});
+	throw new Error(`获取问卷失败: ${newVal}`);
 });
 
 const curValue = ref("");
@@ -69,25 +78,9 @@ onLoad((option) => {
 	meOrOther.value = option?.option;
 });
 
-onShow(async () => {
-	const { execute } = useQuery({ query: meGQL });
-	const { error, data } = await execute();
-	if (error) {
-		uni.showToast({
-			title: `获取已填写问卷失败: ${error}`,
-			icon: "error",
-			duration: 2000,
-		});
-		throw new Error(`获取已填写问卷失败: ${error}`);
-	}
-	questionnaires.value = data?.me.questionnairesAsOwnerAsFriend.map((item: any) => item.questionnaire) || [];
-});
-
 const rankData: Ref<rankDataI> = ref({});
 
 async function chooseQuestionnaire(e: any) {
-	console.log("chooseQuestionnaire: ", e);
-
 	curQuestionnaireId.value = e;
 	if (meOrOther.value === "me") {
 		await getListAsOwner(e);
@@ -97,7 +90,7 @@ async function chooseQuestionnaire(e: any) {
 }
 
 async function getListAsOwner(questionnaireId: string) {
-	const { execute } = useQuery({ query: listAsOwnerGQL, variables: { questionnaireId } });
+	const { execute } = useQuery({ query: listAsOwnerGQL, variables: { questionnaireId }, paused: () => true });
 	const { error, data } = await execute();
 	if (error) {
 		uni.showToast({
@@ -122,7 +115,7 @@ async function getListAsOwner(questionnaireId: string) {
 }
 
 async function getListAsFriend(questionnaireId: string) {
-	const { execute } = useQuery({ query: listAsFriendGQL, variables: { questionnaireId } });
+	const { execute } = useQuery({ query: listAsFriendGQL, variables: { questionnaireId }, paused: () => true });
 	const { error, data } = await execute();
 	if (error) {
 		uni.showToast({

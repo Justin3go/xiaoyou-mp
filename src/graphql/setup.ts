@@ -13,7 +13,7 @@ const fetchPlugin = fetch({
 				header: options?.headers,
 
 				success(res) {
-					return resolve({
+					resolve({
 						ok: true,
 						status: res.statusCode,
 						headers: res.header,
@@ -22,7 +22,7 @@ const fetchPlugin = fetch({
 					} as Response);
 				},
 				fail(e) {
-					return reject(e);
+					reject(e);
 				},
 			});
 		});

@@ -16,7 +16,6 @@
 <script setup lang="ts">
 import { ref, watch, type Ref } from "vue";
 import radar from "./components/radar.vue";
-import { onShow } from "@dcloudio/uni-app";
 import { useQuery } from "villus";
 import { meGQL } from "@/graphql/questionnaire.graphql";
 import type { QuestionnaireI } from "../questionnaire/questionnaire.interface";
@@ -42,26 +41,23 @@ const range: Ref<RangeI[]> = ref([]);
 const curValue = ref("");
 const showType = ref(-1);
 
-watch(questionnaires, (newVal) => {
-	range.value = newVal.map((item) => ({
+const { data, error  } = useQuery({ query: meGQL })
+watch(data, (newVal) => {
+	questionnaires.value = newVal?.me.questionnairesAsOwnerAsFriend.map((item: any) => item.questionnaire) || [];
+	range.value = questionnaires.value.map((item) => ({
 		value: item.id,
 		text: item.title,
 	}));
 });
 
-onShow(async () => {
-	const { execute } = useQuery({ query: meGQL });
-	const { error, data } = await execute();
-	if (error) {
-		uni.showToast({
-			title: `获取已填写问卷失败: ${error}`,
+watch(error, (newVal) => {
+	uni.showToast({
+			title: `获取已填写问卷失败`,
 			icon: "error",
 			duration: 2000,
 		});
-		throw new Error(`获取已填写问卷失败: ${error}`);
-	}
-	questionnaires.value = data?.me.questionnairesAsOwnerAsFriend.map((item: any) => item.questionnaire) || [];
-});
+		throw new Error(`获取已填写问卷失败: ${newVal}`);
+})
 
 function chooseQuestionnaire(e: any) {
 	showType.value = questionnaires.value.find((item) => item.id == e)?.type ?? -1;

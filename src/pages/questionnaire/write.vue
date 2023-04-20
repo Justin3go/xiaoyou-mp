@@ -70,7 +70,6 @@ onLoad(async (option) => {
 	params.friendId = option?.friendId || meStore.user?.id;
 	// TODO 检测该链接是否已经填写过
 	if (await isExisted()) {
-		console.log("已经填写过该问卷了");
 		// 帮助好友填写都是从登录页过来的，所以这里直接返回登录页面
 		uni.navigateBack({
 			delta: 1,
@@ -87,7 +86,8 @@ onLoad(async (option) => {
 });
 
 async function getQuestions(questionnaireId: string) {
-	const { execute } = useQuery({ query: findOneQGQL, variables: { questionnaireId } });
+	// 需要在获取到questionnaireId再执行请求
+	const { execute } = useQuery({ query: findOneQGQL, variables: { questionnaireId }, paused: () => true });
 	uni.showLoading({ title: "正在加载问题列表" });
 	const { error, data } = await execute();
 
@@ -109,20 +109,17 @@ async function getQuestions(questionnaireId: string) {
 }
 
 async function isExisted() {
-	const { execute } = useQuery({ query: isExistedGQL, variables: { data: { ...params } } });
-	uni.showLoading({ title: "正在校验中" });
+	// 只有初始加载的时候需要判断是否存在
+	const { execute } = useQuery({ query: isExistedGQL, variables: { data: { ...params } }, paused: () => true });
 	const { error, data } = await execute();
-
 	if (error) {
 		uni.showToast({
-			title: `校验请求失败: ${error}`,
+			title: `校验请求失败`,
 			icon: "error",
 			duration: 2000,
 		});
 		throw new Error(`校验请求失败: ${error}`);
 	}
-	console.log("isExisted error: ", error);
-	console.log("isExisted data: ", data);
 
 	const isExisted: boolean = data?.isExisted;
 	return isExisted;
