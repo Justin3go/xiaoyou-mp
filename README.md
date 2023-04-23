@@ -46,3 +46,10 @@ npm run dev:mp-weixin
 
 然后使用微信开发工具打开对应的`dist/dev/mp-weixin`文件夹就可以进行预览开发了
 
+## TODO
+
+- uniapp+graphql-subscriptions的消息推送
+- 心理问答智能对话机器人
+- 轻社区
+- 心理专家/咨询师入驻功能
+- 增加更多可用的心理问卷及对应的可视化类型
