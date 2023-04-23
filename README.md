@@ -16,7 +16,7 @@
 
 ## 扫描体验
 
-![](https://oss.justin3go.com/blogs/xiaoyou-mp-code.png)
+![xiaoyou-mp-code](https://user-images.githubusercontent.com/63507251/233824885-dc73c732-0efa-4c35-933b-9b22fc964734.png)
 
 ## 用户使用教程
 
