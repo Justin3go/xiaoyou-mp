@@ -96,17 +96,18 @@
 import { meGQL } from "@/graphql/me.graphql";
 import { useMeStore } from "@/stores/me.store";
 import { useMutation, useQuery } from "villus";
-import { ref, watch } from "vue";
+import { ref, watch, type Ref } from "vue";
 import { userDefaultData, bannerUrl1 } from "@/const";
 import oneRowCard from "@/components/oneRowCard.vue";
 import empty from "@/components/empty.vue";
 import { onPullDownRefresh, onShow } from "@dcloudio/uni-app";
 import { indexIcon1, indexIcon2, indexIcon3, indexIcon4 } from "@/const";
 import { countAsFriendGQL, countAsOwnerGQL } from "@/graphql/index.graphql";
+import type { newsI } from "./index.interface";
 
 const meStore = useMeStore();
 // TODO 消息服务端不做记录，只做保存，推送过来之后就删除了，所以这里后面需要保存在本地
-const news = ref([]);
+const news: Ref<newsI[]> = ref([]);
 // 更多消息的弹窗
 const newsPopup = ref();
 const curNewsId = ref("");
