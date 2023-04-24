@@ -104,6 +104,9 @@ import { onPullDownRefresh, onShow } from "@dcloudio/uni-app";
 import { indexIcon1, indexIcon2, indexIcon3, indexIcon4 } from "@/const";
 import { countAsFriendGQL, countAsOwnerGQL } from "@/graphql/index.graphql";
 import type { newsI } from "./index.interface";
+import { uniGqlWebsocket } from "@/utils/websocket";
+import gql from "graphql-tag";
+import { getToken } from "@/utils/auth";
 
 const meStore = useMeStore();
 // TODO 消息服务端不做记录，只做保存，推送过来之后就删除了，所以这里后面需要保存在本地
@@ -112,6 +115,18 @@ const news: Ref<newsI[]> = ref([]);
 const newsPopup = ref();
 const curNewsId = ref("");
 const curNewsContent = ref("");
+
+const haveWritten = `
+	subscription haveWritten {
+		haveWritten {
+			owner {
+				id
+			}
+		}
+	}
+`;
+
+let ws: uniGqlWebsocket | null = null;
 
 const {
 	data: dataFriend,
@@ -148,6 +163,11 @@ onShow(async () => {
 	}
 	await executeFriend();
 	await executeOwner();
+	if (ws === null && getToken("accessToken")) {
+		ws = new uniGqlWebsocket(haveWritten, (res) => {
+			console.log("haveWritten: ", res);
+		});
+	}
 	console.log("App Show");
 });
 
@@ -162,7 +182,7 @@ async function getUser() {
 	const { data, error } = await execute();
 	console.log("query user data: ", data);
 	console.log("query user error: ", error);
-	if(data?.me) {
+	if (data?.me) {
 		meStore.$patch({ user: data.me });
 	}
 }
