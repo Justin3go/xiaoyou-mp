@@ -15,3 +15,9 @@ export const countAsOwnerGQL = gql`
 		}
 	}
 `;
+
+export const haveWrittenGQL = gql`
+	query haveWritten {
+		haveWrittenQuery
+	}
+`;

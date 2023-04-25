@@ -96,17 +96,19 @@
 import { meGQL } from "@/graphql/me.graphql";
 import { useMeStore } from "@/stores/me.store";
 import { useMutation, useQuery } from "villus";
-import { ref, watch } from "vue";
+import { ref, watch, type Ref } from "vue";
 import { userDefaultData, bannerUrl1 } from "@/const";
 import oneRowCard from "@/components/oneRowCard.vue";
 import empty from "@/components/empty.vue";
-import { onPullDownRefresh, onShow } from "@dcloudio/uni-app";
+import { onPullDownRefresh, onShow, onUnload } from "@dcloudio/uni-app";
 import { indexIcon1, indexIcon2, indexIcon3, indexIcon4 } from "@/const";
-import { countAsFriendGQL, countAsOwnerGQL } from "@/graphql/index.graphql";
+import { countAsFriendGQL, countAsOwnerGQL, haveWrittenGQL } from "@/graphql/index.graphql";
+import type { newsI } from "./index.interface";
+import { getNews, setNews } from "@/utils/news";
 
 const meStore = useMeStore();
 // TODO 消息服务端不做记录，只做保存，推送过来之后就删除了，所以这里后面需要保存在本地
-const news = ref([]);
+const news: Ref<newsI[]> = ref(getNews() || []);
 // 更多消息的弹窗
 const newsPopup = ref();
 const curNewsId = ref("");
@@ -141,18 +143,51 @@ watch(errorOwner, (newVal) => {
 	throw new Error(`获取数量失败errorOwner: ${newVal}`);
 });
 
+const {
+	data: dataNews,
+	execute: executeNews,
+	error: errorNews,
+} = useQuery({ query: haveWrittenGQL, paused: () => true });
+
+watch(dataNews, (newVal) => {
+	if(newVal?.length){
+		news.value.unshift(
+			...newVal?.haveWrittenQuery.map((item: string) => ({
+				id: new Date().getTime(),
+				content: item,
+			}))
+		);
+	}
+});
+
+watch(errorNews, (newVal) => {
+	uni.showToast({
+		title: `获取消息失败`,
+		icon: "error",
+		duration: 2000,
+	});
+	throw new Error(`获取消息失败errorNews: ${newVal}`);
+});
+
 onShow(async () => {
 	if (meStore.user === null) {
 		await getUser();
 	}
 	await executeFriend();
 	await executeOwner();
+	await executeNews();
 	console.log("App Show");
 });
+
+onUnload(() => {
+	// 保存消息到本地
+	setNews(news.value)
+})			
 
 onPullDownRefresh(async () => {
 	await executeFriend();
 	await executeOwner();
+	await executeNews();
 	uni.stopPullDownRefresh();
 });
 
@@ -161,7 +196,7 @@ async function getUser() {
 	const { data, error } = await execute();
 	console.log("query user data: ", data);
 	console.log("query user error: ", error);
-	if(data?.me) {
+	if (data?.me) {
 		meStore.$patch({ user: data.me });
 	}
 }
