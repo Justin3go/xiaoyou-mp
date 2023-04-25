@@ -95,7 +95,7 @@
 <script setup lang="ts">
 import { meGQL } from "@/graphql/me.graphql";
 import { useMeStore } from "@/stores/me.store";
-import { useMutation, useQuery } from "villus";
+import { useMutation, useQuery, useSubscription } from "villus";
 import { ref, watch } from "vue";
 import { userDefaultData, bannerUrl1 } from "@/const";
 import oneRowCard from "@/components/oneRowCard.vue";
@@ -103,6 +103,9 @@ import empty from "@/components/empty.vue";
 import { onPullDownRefresh, onShow } from "@dcloudio/uni-app";
 import { indexIcon1, indexIcon2, indexIcon3, indexIcon4 } from "@/const";
 import { countAsFriendGQL, countAsOwnerGQL } from "@/graphql/index.graphql";
+import { getToken } from "@/utils/auth";
+import { uniWebSocket } from "@/utils/websocket";
+import { createClient } from "graphql-ws";
 
 const meStore = useMeStore();
 // TODO 消息服务端不做记录，只做保存，推送过来之后就删除了，所以这里后面需要保存在本地
@@ -141,6 +144,28 @@ watch(errorOwner, (newVal) => {
 	throw new Error(`获取数量失败errorOwner: ${newVal}`);
 });
 
+const newMessage = `
+subscription haveWritten {
+  haveWritten {
+    owner {
+      id
+    }
+  }
+}`;
+/*
+const { data, error } = useSubscription({ query: newMessage });
+watch(data, (newVal) => {
+	console.log("newMessage data: ", newVal);
+});
+watch(error, (newVal) => {
+	console.log("newMessage error: ", newVal);
+});*/
+
+const wsClient = createClient({
+	url: `${import.meta.env.VITE_SERVER_IP_WS}/graphql`,
+	webSocketImpl: uniWebSocket,
+});
+
 onShow(async () => {
 	if (meStore.user === null) {
 		await getUser();
@@ -148,6 +173,31 @@ onShow(async () => {
 	await executeFriend();
 	await executeOwner();
 	console.log("App Show");
+	if (getToken("accessToken")) {
+		(async () => {
+			const onNext = () => {
+				/* handle incoming values */
+			};
+
+			let unsubscribe = () => {
+				/* complete the subscription */
+			};
+
+			await new Promise((resolve, reject) => {
+				unsubscribe = wsClient.subscribe(
+					{
+						query: newMessage,
+					},
+					{
+						next: onNext,
+						error: reject,
+						complete: resolve as any,
+					}
+				);
+			});
+			console.log("subscription: ", onNext);
+		})();
+	}
 });
 
 onPullDownRefresh(async () => {
@@ -161,7 +211,7 @@ async function getUser() {
 	const { data, error } = await execute();
 	console.log("query user data: ", data);
 	console.log("query user error: ", error);
-	if(data?.me) {
+	if (data?.me) {
 		meStore.$patch({ user: data.me });
 	}
 }

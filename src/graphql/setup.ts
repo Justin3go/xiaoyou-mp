@@ -1,4 +1,4 @@
-import { createClient, fetch } from "villus";
+import { createClient, fetch  } from "villus";
 
 type Methods = "OPTIONS" | "GET" | "HEAD" | "POST" | "PUT" | "DELETE" | "TRACE" | "CONNECT";
 
