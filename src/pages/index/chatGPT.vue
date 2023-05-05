@@ -1,5 +1,5 @@
 <template>
-	<chat :type="chatType.customerChat"></chat>
+	<chat :type="chatType.chatGPT"></chat>
 </template>
 <script setup lang="ts">
 import chat from '@/components/chat/chat.vue';
