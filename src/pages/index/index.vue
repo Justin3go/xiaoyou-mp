@@ -28,7 +28,7 @@
 					<view class="questionnaire-title">已填</view>
 				</view>
 				<view class="owner-container">
-					<view class="owner-code">
+					<view class="owner-count">
 						{{ dataOwner?.me.countAsOwner ?? "--" }}
 					</view>
 					<view class="owner-title">被填</view>
@@ -302,7 +302,7 @@ function toQA() {
 		font-size: 15px;
 		display: flex;
 		justify-content: space-around;
-		align-items: center;
+		align-items: baseline;
 		.questionnaire-container {
 			margin-right: 10px;
 			.questionnaire-count {
@@ -317,10 +317,8 @@ function toQA() {
 			width: 60px;
 			height: 55px;
 			border-left: 1px solid $theme-color-gray-lighter;
-			.owner-code {
-				width: 100%;
-				display: flex;
-				justify-content: center;
+			.owner-count {
+				text-align: center;
 			}
 			.owner-title {
 				margin-top: 15px;
