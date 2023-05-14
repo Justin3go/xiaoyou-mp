@@ -121,7 +121,9 @@
 			></uni-popup-dialog>
 		</uni-popup>
 		<view class="other-cards">
-			<one-row-card></one-row-card>
+			<one-row-card>
+				<template #left>这是一则推广消息(广告位招租)</template>
+			</one-row-card>
 		</view>
 	</view>
 </template>

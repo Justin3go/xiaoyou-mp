@@ -30,6 +30,18 @@
 				发送
 			</button>
 		</view>
+		<uni-popup ref="tipPopup" type="dialog">
+			<uni-popup-dialog
+				type="info"
+				title="免费试用已结束"
+				confirmText="升级VIP"
+				cancelText="关闭"
+				content="您的免费试用额度10次已用完。如有需要，请升级VIP以避免次数限制"
+				:duration="2000"
+				@close="tipPopupClose()"
+				@confirm="tipPopupConfirm()"
+			></uni-popup-dialog>
+		</uni-popup>
 	</view>
 </template>
 <script setup lang="ts">
@@ -53,6 +65,8 @@ const props = defineProps<propsI>();
 
 const messages: Ref<messagesI[]> = ref([]);
 const input = ref("");
+
+const tipPopup = ref();
 
 async function submit() {
 	if (props.type === chatType.customerChat) {
@@ -112,12 +126,34 @@ async function chatGPT() {
 		});
 		throw new Error(`加载错误: ${error}`);
 	}
-	messages.value.push({
-		left: false,
-		text: data?.chatGPT,
-		time: new Date().getTime(),
-	});
+	const msg = data?.chatGPT;
+	if (msg) {
+		messages.value.push({
+			left: false,
+			text: msg,
+			time: new Date().getTime(),
+		});
+	} else {
+		tipPopupOpen();
+	}
 	input.value = "";
+}
+
+function tipPopupOpen() {
+	tipPopup.value.open();
+}
+
+function tipPopupClose() {
+	tipPopup.value.close();
+}
+
+function tipPopupConfirm() {
+	// TODO 跳转付费页面
+	uni.showToast({
+		title: "正在开发中,敬请期待",
+		icon: "none",
+	});
+	tipPopup.value.close();
 }
 </script>
 <style lang="scss" scoped>
