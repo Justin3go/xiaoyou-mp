@@ -103,3 +103,9 @@ export const chatGQL = gql`
 		}
 	}
 `;
+
+export const chatGPT_GQL = gql`
+	mutation chatGPT($talk: String!) {
+		chatGPT(talk: $talk)
+	}
+`;
