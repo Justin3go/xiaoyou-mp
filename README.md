@@ -36,7 +36,6 @@
 
 ```
 VITE_SERVER_IP="https://api.justin3go.com"
-VITE_SERVER_IP_WS="wss://api.justin3go.com"
 ```
 
 暂时只支持微信小程序，其他小程序版本未做兼容处理。
@@ -50,8 +49,8 @@ npm run dev:mp-weixin
 
 ## TODO
 
-- uniapp+graphql-subscriptions的消息推送
-- 心理问答智能对话机器人
+- 升级VIP入口
+- GPT流式回复增加等待体验
 - 轻社区
 - 心理专家/咨询师入驻功能
 - 增加更多可用的心理问卷及对应的可视化类型
