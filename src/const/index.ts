@@ -53,10 +53,10 @@ export const questionnaireUrl = '/static/image/questionnairePage/questionnaire.p
 export const emptyUrl = '/static/image/noData.png'
 
 // icons
-export const indexIcon1 = '/static/image/icons/问卷查看.png'
-export const indexIcon2 = '/static/image/icons/关于自己.png'
-export const indexIcon3 = '/static/image/icons/关于他人.png'
-export const indexIcon4 = '/static/image/icons/心理问答.png'
+export const indexIcon1 = '/static/image/icons/questionnaireLook.png'
+export const indexIcon2 = '/static/image/icons/aboutMe.png'
+export const indexIcon3 = '/static/image/icons/aboutOther.png'
+export const indexIcon4 = '/static/image/icons/qa.png'
 
 // rankList
 
@@ -67,4 +67,4 @@ export const thirdRank = '/static/image/list/third.png'
 export const feedbackUrl = 'https://xh4u7d54le.feishu.cn/share/base/form/shrcntq0JjHrPv50gsBhU5yVRrc'
 export const sourceCodeUrl = 'https://github.com/Justin3go/xiaoyou-mp'
 
-export const wxMoney = '/static/微信收款.jpg'
+export const wxMoney = '/static/wechatCode.jpg'
