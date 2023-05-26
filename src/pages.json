@@ -46,6 +46,12 @@
 			}
 		},
 		{
+			"path": "pages/index/chatGPT",
+			"style": {
+				"navigationBarTitleText": "心理咨询"
+			}
+		},
+		{
 			"path": "pages/questionnaire/index",
 			"style": {
 				"navigationBarTitleText": "问卷"
