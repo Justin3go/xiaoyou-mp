@@ -30,6 +30,10 @@
 
 ![笑友主要功能图](https://user-images.githubusercontent.com/63507251/233826785-6ff31b6b-5f3c-4151-a6da-52cb95d48701.png)
 
+## ChangeLog
+
+Detailed changes for each release are documented in the [CHANGELOG](https://github.com/Justin3go/xiaoyou-mp/blob/main/CHANGELOG.md).
+
 ## 开发
 
 环境变量，在根目录添加`.env`文件，文件内容如下：
@@ -51,6 +55,8 @@ npm run dev:mp-weixin
 
 - 升级VIP入口
 - GPT流式回复增加等待体验
+- 增加用户引导程序
+- 完成代码中已知TODO
 - 轻社区
 - 心理专家/咨询师入驻功能
 - 增加更多可用的心理问卷及对应的可视化类型
