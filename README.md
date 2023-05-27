@@ -14,6 +14,8 @@
 
 该小程序基于该理念，并结合特有的一些创新点（好友互换角度填写问卷，及时可视化正反馈，以及朋友之间相互分享等）可以很好地解决这这些痛点，这也是本仓库出现的原因，希望为社会的心理健康体系的完善尽上自己的绵薄之力。
 
+![QQ截图20230527153125](https://github.com/Justin3go/xiaoyou-mp/assets/63507251/5751189b-401a-46f4-a6c1-c70daf4a42fa)
+
 ## 扫描体验
 
 ![xiaoyou-mp-code](https://user-images.githubusercontent.com/63507251/233824885-dc73c732-0efa-4c35-933b-9b22fc964734.png)
