@@ -1,6 +1,6 @@
 {
   "name": "xiaoyou",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "scripts": {
     "dev:app": "uni -p app",
     "dev:app-android": "uni -p app-android",
@@ -35,7 +35,7 @@
     "build:quickapp-webview-huawei": "uni build -p quickapp-webview-huawei",
     "build:quickapp-webview-union": "uni build -p quickapp-webview-union",
     "type-check": "vue-tsc --noEmit",
-    "changeLog":"conventional-changelog -p angular -i CHANGELOG.md -s"
+    "changeLog": "conventional-changelog -p angular -i CHANGELOG.md -s"
   },
   "dependencies": {
     "@dcloudio/uni-app": "3.0.0-alpha-3061620221230002",
