@@ -430,6 +430,7 @@ function moreService() {
 	}
 
 	.login-button-container {
+		padding-bottom: 50px;
 		.login-button {
 			color: #ffffff;
 			background-color: $theme-color-lighter-2;

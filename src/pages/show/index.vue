@@ -21,6 +21,7 @@ import { meGQL } from "@/graphql/questionnaire.graphql";
 import type { QuestionnaireI } from "../questionnaire/questionnaire.interface";
 import type { RangeI } from "./show.interface";
 import empty from "@/components/empty.vue";
+import { onShow } from "@dcloudio/uni-app";
 
 const questionnaires: Ref<QuestionnaireI[]> = ref([]);
 
@@ -41,7 +42,7 @@ const range: Ref<RangeI[]> = ref([]);
 const curValue = ref("");
 const showType = ref(-1);
 
-const { data, error  } = useQuery({ query: meGQL })
+const { data, execute, error } = useQuery({ query: meGQL });
 watch(data, (newVal) => {
 	questionnaires.value = newVal?.me.questionnairesAsOwnerAsFriend.map((item: any) => item.questionnaire) || [];
 	range.value = questionnaires.value.map((item) => ({
@@ -52,12 +53,16 @@ watch(data, (newVal) => {
 
 watch(error, (newVal) => {
 	uni.showToast({
-			title: `获取已填写问卷失败`,
-			icon: "error",
-			duration: 2000,
-		});
-		throw new Error(`获取已填写问卷失败: ${newVal}`);
-})
+		title: `获取已填写问卷失败`,
+		icon: "error",
+		duration: 2000,
+	});
+	throw new Error(`获取已填写问卷失败: ${newVal}`);
+});
+
+onShow(async () => {
+	await execute();
+});
 
 function chooseQuestionnaire(e: any) {
 	showType.value = questionnaires.value.find((item) => item.id == e)?.type ?? -1;
@@ -75,7 +80,7 @@ function chooseQuestionnaire(e: any) {
 	position: fixed;
 	top: -1px;
 	width: 100vw;
-	background-color: #FFFFFF;
+	background-color: #ffffff;
 	z-index: 1000;
 }
 

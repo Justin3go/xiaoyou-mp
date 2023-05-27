@@ -3,7 +3,7 @@
 		<view class="banner-container">
 			<swiper class="swiper" circular :indicator-dots="true" :autoplay="true" :interval="2000" :duration="500">
 				<swiper-item>
-					<image style="height: 30vh; width: 100vw" :src="bannerUrl1"></image>
+					<image style="width: 100vw" mode="widthFix" :src="bannerUrl1"></image>
 				</swiper-item>
 			</swiper>
 		</view>
@@ -259,8 +259,8 @@ function toQA() {
 <style lang="scss" scoped>
 .banner-container {
 	.swiper {
-		height: 30vh;
 		width: 100vw;
+		height: 254.246px;
 	}
 }
 .user-container {
@@ -375,6 +375,6 @@ function toQA() {
 }
 
 .no-news {
-	padding-top: 50px;
+	padding: 50px 0;
 }
 </style>
