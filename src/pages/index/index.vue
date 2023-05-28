@@ -150,9 +150,10 @@ const {
 } = useQuery({ query: haveWrittenGQL, paused: () => true });
 
 watch(dataNews, (newVal) => {
-	if(newVal?.length){
+	const pullNews = newVal?.haveWrittenQuery.filter((item: string) => item);
+	if (pullNews?.length) {
 		news.value.unshift(
-			...newVal?.haveWrittenQuery.map((item: string) => ({
+			...pullNews.map((item: string) => ({
 				id: new Date().getTime(),
 				content: item,
 			}))
@@ -181,8 +182,8 @@ onShow(async () => {
 
 onUnload(() => {
 	// 保存消息到本地
-	setNews(news.value)
-})			
+	setNews(news.value);
+});
 
 onPullDownRefresh(async () => {
 	await executeFriend();
