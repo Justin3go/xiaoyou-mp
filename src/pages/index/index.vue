@@ -150,9 +150,10 @@ const {
 } = useQuery({ query: haveWrittenGQL, paused: () => true });
 
 watch(dataNews, (newVal) => {
-	if(newVal?.length){
+	const pullNews = newVal?.haveWrittenQuery;
+	if(pullNews?.length){
 		news.value.unshift(
-			...newVal?.haveWrittenQuery.map((item: string) => ({
+			...pullNews.map((item: string) => ({
 				id: new Date().getTime(),
 				content: item,
 			}))
