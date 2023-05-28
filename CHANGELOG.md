@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.5](https://github.com/Justin3go/xiaoyou-mp/compare/v0.5.4...v0.5.5) (2023-05-28)
+
+
+### Bug Fixes
+
+* 消息逻辑问题 ([7008240](https://github.com/Justin3go/xiaoyou-mp/commit/70082405692cdf0976ed30bf9d92c06464b27c6f))
+
 ## [0.5.4](https://github.com/Justin3go/xiaoyou-mp/compare/v0.5.3...v0.5.4) (2023-05-27)
 
 
