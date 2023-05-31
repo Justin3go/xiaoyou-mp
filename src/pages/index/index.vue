@@ -247,10 +247,19 @@ function toRankListOther() {
 	);
 }
 function toQA() {
-	setTimeout(
+	/*setTimeout(
 		() =>
 			uni.navigateTo({
 				url: "/pages/index/chatGPT",
+			}),
+		500
+	);*/
+	setTimeout(
+		() =>
+			uni.showToast({
+				title: "应政策要求暂时下架",
+				icon: "none",
+				duration: 2000,
 			}),
 		500
 	);
