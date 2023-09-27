@@ -1,6 +1,6 @@
 {
   "name": "xiaoyou",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "scripts": {
     "dev:app": "uni -p app",
     "dev:app-android": "uni -p app-android",

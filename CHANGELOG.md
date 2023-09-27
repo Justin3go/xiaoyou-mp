@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.1](https://github.com/Justin3go/xiaoyou-mp/compare/v0.6.0...v0.6.1) (2023-09-27)
+
+
+### Chore
+
+* update release.yml ([ba4594f](https://github.com/Justin3go/xiaoyou-mp/commit/ba4594f6733877cf693d63b1c08f469176e71ddf))
+
 ## [0.6.0](https://github.com/Justin3go/xiaoyou-mp/compare/v0.5.5...v0.6.0) (2023-05-31)
 
 
